@@ -29,7 +29,7 @@ class SocialLoginButtons extends StatelessWidget {
           ),
         ),
         IconButton(
-          onPressed: onPressed,
+          onPressed: (){},
           icon: SvgPicture.asset(
             icon2,
             colorFilter:
@@ -37,7 +37,7 @@ class SocialLoginButtons extends StatelessWidget {
           ),
         ),
         IconButton(
-          onPressed: onPressed,
+          onPressed: (){},
           icon: SvgPicture.asset(
             icon3,
             colorFilter:

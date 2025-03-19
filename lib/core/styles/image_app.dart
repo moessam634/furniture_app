@@ -13,4 +13,6 @@ class ImageApp {
   static const String enterCode = "${imagePath}enter_code.png";
   static const String forgetPassword = "${imagePath}forget_password.png";
   static const String resetPassword = "${imagePath}reset_password.png";
+  static const String off30 = "${imagePath}30% OFF.png";
+  static const String chair = "${imagePath}chair.png";
 }

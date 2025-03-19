@@ -41,11 +41,23 @@ class TextStyles {
     fontFamily: AppFonts.roboto,
     fontWeight: FontWeight.w500,
   );
+  static TextStyle kPinPutColor30 = TextStyle(
+    color: ColorsApp.kPinPutColor,
+    fontSize: 30.sp,
+    fontFamily: AppFonts.roboto,
+    fontWeight: FontWeight.w500,
+  );
   static TextStyle black20 = TextStyle(
     color: Colors.black,
     fontSize: 20.sp,
     fontFamily: AppFonts.roboto,
     fontWeight: FontWeight.w400,
+  );
+  static TextStyle black22 = TextStyle(
+    color: const Color(0xFF313131),
+    fontSize: 22.sp,
+    fontFamily: AppFonts.roboto,
+    fontWeight: FontWeight.w500,
   );
   static TextStyle black14 = TextStyle(
     color: ColorsApp.kLightTextColor,

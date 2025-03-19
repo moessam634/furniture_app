@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:furniture_app/core/helper/navigation_helper.dart';
 import 'package:furniture_app/features/forget_password/view/screen/forget_screen.dart';
+import 'package:furniture_app/features/login/view/widget/custom_text_rich.dart';
 import 'package:furniture_app/features/login/view/widget/social_login_buttons.dart';
 import 'package:furniture_app/features/sign_up/view/screen/sign_up_screen.dart';
 import '../../../../core/styles/colors_app.dart';
@@ -14,7 +14,6 @@ import '../../../../core/widgets/custom_button.dart';
 import '../../../../core/widgets/custom_column_image_text.dart';
 import '../../../../core/widgets/custom_divider_widget.dart';
 import '../../../../core/widgets/custom_text_form_field.dart';
-import 'custom_text_rich.dart';
 
 class LoginBody extends StatefulWidget {
   const LoginBody({super.key});
@@ -26,7 +25,7 @@ class LoginBody extends StatefulWidget {
 class _LoginBodyState extends State<LoginBody> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
-  bool isObscure = false;
+  bool isObscure = true;
 
   @override
   void dispose() {
@@ -69,20 +68,16 @@ class _LoginBodyState extends State<LoginBody> {
             keyboardType: TextInputType.visiblePassword,
             obscureText: isObscure,
             suffixIcon: IconButton(
-                onPressed: () {
-                  setState(() {
-                    isObscure = !isObscure;
-                  });
-                },
-                icon: isObscure
-                    ? Icon(
-                        CupertinoIcons.eye_slash,
-                        size: 20,
-                      )
-                    : Icon(
-                        CupertinoIcons.eye,
-                        size: 20,
-                      )),
+              onPressed: () {
+                setState(() {
+                  isObscure = !isObscure;
+                });
+              },
+              icon: Icon(
+                isObscure ? CupertinoIcons.eye_slash : CupertinoIcons.eye,
+                size: 20,
+              ),
+            ),
           ),
           Align(
             alignment: Alignment.centerRight,
@@ -117,18 +112,15 @@ class _LoginBodyState extends State<LoginBody> {
             icon1: ImageApp.googleIcons,
             icon2: ImageApp.facebookIcon,
             icon3: ImageApp.twitterIcon,
+            // onPressed: launchGoogle,
           ),
           SizedBox(
             height: 25.h,
           ),
           CustomTextRich(
-            text1: StringApp.doNotHavAnAcc,
-            text2: StringApp.signUp,
-            onTap: () {
-              NavigationHelper.push(
-                  context: context, destination: SignUpScreen());
-            },
-          ),
+              text1: StringApp.doNotHavAnAcc,
+              text2: StringApp.signUp,
+              navigateTo: const SignUpScreen())
         ],
       ),
     );

@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:furniture_app/core/helper/navigation_helper.dart';
-import 'package:furniture_app/features/forget_password/view/screen/forget_screen.dart';
 import 'package:furniture_app/features/login/view/screen/login_screen.dart';
 import 'package:furniture_app/features/login/view/widget/social_login_buttons.dart';
 import '../../../../core/styles/colors_app.dart';
@@ -14,6 +13,7 @@ import '../../../../core/widgets/custom_column_image_text.dart';
 import '../../../../core/widgets/custom_divider_widget.dart';
 import '../../../../core/widgets/custom_text_form_field.dart';
 import '../../../login/view/widget/custom_text_rich.dart';
+import '../screen/enter_code_sign_up.dart';
 
 class SignUpBody extends StatefulWidget {
   const SignUpBody({super.key});
@@ -25,7 +25,7 @@ class SignUpBody extends StatefulWidget {
 class _SignUpBodyState extends State<SignUpBody> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
-  bool isObscure = false;
+  bool isObscure = true;
 
   @override
   void dispose() {
@@ -42,17 +42,27 @@ class _SignUpBodyState extends State<SignUpBody> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           CustomColumnImageText(
-            image: ImageApp.loginPic,
-            text: StringApp.logInYourAcc,
+            image: ImageApp.createNewAcc,
+            text: StringApp.createNewAcc,
             style: TextStyles.black24,
             innerHeight: 25.h,
-            outerHeight: 60.h,
+            outerHeight: 70.h,
           ),
           SizedBox(
             height: 25.h,
           ),
           CustomTextFormField(
-            hintText: AutofillHints.email,
+            hintText: StringApp.fullName,
+            fillColor: ColorsApp.kSecondaryColor,
+            controller: emailController,
+            keyboardType: TextInputType.emailAddress,
+            focusColor: ColorsApp.kBackGroundColor,
+          ),
+          SizedBox(
+            height: 19.h,
+          ),
+          CustomTextFormField(
+            hintText: StringApp.emailOrPhone,
             fillColor: ColorsApp.kSecondaryColor,
             controller: emailController,
             keyboardType: TextInputType.emailAddress,
@@ -68,39 +78,27 @@ class _SignUpBodyState extends State<SignUpBody> {
             keyboardType: TextInputType.visiblePassword,
             obscureText: isObscure,
             suffixIcon: IconButton(
-                onPressed: () {
-                  setState(() {
-                    isObscure = !isObscure;
-                  });
-                },
-                icon: isObscure
-                    ? Icon(
-                        CupertinoIcons.eye_slash,
-                        size: 20,
-                      )
-                    : Icon(
-                        CupertinoIcons.eye,
-                        size: 20,
-                      )),
-          ),
-          Align(
-            alignment: Alignment.centerRight,
-            child: TextButton(
-                onPressed: () {
-                  NavigationHelper.push(
-                      context: context, destination: ForgetScreen());
-                },
-                child: Text(
-                  StringApp.forgetPass,
-                  style: TextStyles.kPrimaryColor16,
-                )),
+              onPressed: () {
+                setState(() {
+                  isObscure = !isObscure;
+                });
+              },
+              icon: Icon(
+                isObscure ? CupertinoIcons.eye_slash : CupertinoIcons.eye,
+                size: 20,
+              ),
+            ),
           ),
           SizedBox(
-            height: 20.h,
+            height: 25.h,
           ),
           CustomButton(
-            text: StringApp.logIn,
+            text: StringApp.verify,
             style: TextStyles.white18,
+            onTap: () {
+              NavigationHelper.push(
+                  context: context, destination: EnterCodeSignUpScreen());
+            },
           ),
           SizedBox(
             height: 30.h,
@@ -118,16 +116,12 @@ class _SignUpBodyState extends State<SignUpBody> {
             icon3: ImageApp.twitterIcon,
           ),
           SizedBox(
-            height: 25.h,
+            height: 10.h,
           ),
           CustomTextRich(
-            text1: StringApp.alreadyHaveAnAcc,
-            text2: StringApp.logIn,
-            onTap: () {
-              NavigationHelper.push(
-                  context: context, destination: LoginScreen());
-            },
-          ),
+              text1: StringApp.doNotHavAnAcc,
+              text2: StringApp.logIn,
+              navigateTo: const LoginScreen())
         ],
       ),
     );

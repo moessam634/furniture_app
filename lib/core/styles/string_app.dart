@@ -27,5 +27,13 @@ class StringApp {
   static const String or = "Or";
   static const String doNotHavAnAcc = "Don’t have an account? ";
   static const String signUp = "Sign up";
+  static const String fullName = "Full name";
+  static const String verify = "Verify";
+  static const String categories = "Categories";
+  static const String search = "Search";
+  static const String seeAll = "See all";
+  static const String all = "All";
+  static const String sofa = "Sofa";
+  static const String letsFurnishYourHome = "Let’s furnish your\nhome";
   static const String alreadyHaveAnAcc = "Already have an account? ";
 }

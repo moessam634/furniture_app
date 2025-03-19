@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:furniture_app/features/home/view/screen/home_screen.dart';
 import 'package:furniture_app/features/splash/view/screen/splash_screen.dart';
 
 class MyApp extends StatelessWidget {
@@ -8,7 +9,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
-      designSize: const Size(375, 812),
+      designSize: const Size(375, 1167),
       minTextAdapt: true,
       splitScreenMode: true,
       builder: (_, child) {
@@ -18,7 +19,7 @@ class MyApp extends StatelessWidget {
           home: child,
         );
       },
-      child: SplashScreen(),
+      child: HomeScreen(),
     );
   }
 }
