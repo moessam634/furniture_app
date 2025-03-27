@@ -51,7 +51,6 @@ class _ResetPasswordBodyState extends State<ResetPasswordBody> {
             fillColor: ColorsApp.kSecondaryColor,
             controller: newPasswordController,
             keyboardType: TextInputType.emailAddress,
-            focusColor: ColorsApp.kBackGroundColor,
           ),
           SizedBox(
             height: 19.h,

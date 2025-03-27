@@ -15,4 +15,18 @@ class ImageApp {
   static const String resetPassword = "${imagePath}reset_password.png";
   static const String off30 = "${imagePath}30% OFF.png";
   static const String chair = "${imagePath}chair.png";
+  static const String sofa = "${imagePath}sofa.png";
+  static const String heartIcon = "${imagePath}ph_heart-bold.svg";
+  static const String plusIcon = "${imagePath}plus.svg";
+  static const String homeIcon = "${imagePath}home-outline-rounded.svg";
+  static const String truckIcon = "${imagePath}truck-fast-outline.svg";
+  static const String userIcon = "${imagePath}User.svg";
+  static const String ellipseIcon = "${imagePath}Ellipse 43.png";
+  static const String arrowBackIcon = "${imagePath}arrowBack.svg";
+  static const String arrowForwardIcon = "${imagePath}forwardArrow.svg";
+  static const String rectangleImage = "${imagePath}Rectangle 47.png";
+  static const String shoppingCartIcon = "${imagePath}shopping-cart.svg";
+  static const String editIcon = "${imagePath}editIcon.svg";
+  static const String shoppingIcon =
+      "${imagePath}material-symbols_shopping-cart-outline.svg";
 }

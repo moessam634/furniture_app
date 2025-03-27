@@ -21,10 +21,10 @@ class _CategoryFilterState extends State<CategoryFilter> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 50.h, // Adjust height responsively
+      height: 50.h,
       child: ListView.separated(
         scrollDirection: Axis.horizontal,
-        padding: EdgeInsets.symmetric(horizontal: 10.w),
+        padding: EdgeInsets.symmetric(horizontal: 24.w),
         itemCount: categories.length,
         separatorBuilder: (_, __) => SizedBox(width: 8.w),
         itemBuilder: (context, index) {

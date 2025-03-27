@@ -34,6 +34,7 @@ class StringApp {
   static const String seeAll = "See all";
   static const String all = "All";
   static const String sofa = "Sofa";
+  static const String chair = "Chair";
   static const String letsFurnishYourHome = "Let’s furnish your\nhome";
   static const String alreadyHaveAnAcc = "Already have an account? ";
 }

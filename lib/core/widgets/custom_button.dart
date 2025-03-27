@@ -20,10 +20,13 @@ class CustomButton extends StatelessWidget {
           borderRadius: BorderRadius.circular(16.r),
           color: ColorsApp.kPrimaryColor,
         ),
-        child: Text(
-          text,
-          style: style,
-          textAlign: TextAlign.center,
+        child: SizedBox(
+          height: 30.h,
+          child: Text(
+            text,
+            style: style,
+            textAlign: TextAlign.center,
+          ),
         ),
       ),
     );

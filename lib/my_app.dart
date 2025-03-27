@@ -1,7 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:furniture_app/core/widgets/custom_counter_container.dart';
+import 'package:furniture_app/features/cart/view/screen/cart_screen.dart';
 import 'package:furniture_app/features/home/view/screen/home_screen.dart';
+import 'package:furniture_app/features/login/view/screen/login_screen.dart';
+import 'package:furniture_app/features/product_details/view/screen/product_details_screen.dart';
+import 'package:furniture_app/features/sign_up/view/screen/sign_up_screen.dart';
 import 'package:furniture_app/features/splash/view/screen/splash_screen.dart';
+import 'package:furniture_app/features/switcher/view/screen/switcher_screen.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -9,7 +15,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
-      designSize: const Size(375, 1167),
+      designSize: const Size(375, 812),
       minTextAdapt: true,
       splitScreenMode: true,
       builder: (_, child) {
@@ -19,7 +25,7 @@ class MyApp extends StatelessWidget {
           home: child,
         );
       },
-      child: HomeScreen(),
+      child: SwitcherScreen(),
     );
   }
 }

@@ -22,16 +22,36 @@ class TextStyles {
     fontFamily: AppFonts.roboto,
     fontWeight: FontWeight.w500,
   );
+
+  static TextStyle white24 = TextStyle(
+    color: Colors.white,
+    fontSize: 24.sp,
+    fontFamily: AppFonts.roboto,
+    fontWeight: FontWeight.w700,
+  );
+
   static TextStyle kPrimaryColor16 = TextStyle(
     color: ColorsApp.kPrimaryColor,
     fontSize: 16.sp,
     fontFamily: AppFonts.roboto,
     fontWeight: FontWeight.w500,
   );
+  static TextStyle kPrimaryColor24 = TextStyle(
+    color: ColorsApp.kPrimaryColor,
+    fontSize: 24.sp,
+    fontFamily: AppFonts.roboto,
+    fontWeight: FontWeight.w600,
+  );
 
   static TextStyle black16 = TextStyle(
     color: Colors.black,
     fontSize: 16.sp,
+    fontFamily: AppFonts.roboto,
+    fontWeight: FontWeight.w400,
+  );
+  static TextStyle kPrimaryColor10 = TextStyle(
+    color: ColorsApp.kPrimaryColor,
+    fontSize: 10.sp,
     fontFamily: AppFonts.roboto,
     fontWeight: FontWeight.w400,
   );
