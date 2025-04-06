@@ -4,18 +4,24 @@ import 'package:furniture_app/core/styles/colors_app.dart';
 import 'package:furniture_app/core/styles/text_styles.dart';
 
 class CustomCounterContainer extends StatelessWidget {
-  const CustomCounterContainer(
-      {super.key,
-      this.side,
-      this.width,
-      this.height,
-      required this.text,
-      required this.onPressedPlus,
-      required this.onPressedMinus});
+  const CustomCounterContainer({
+    super.key,
+    this.side,
+    this.width,
+    this.height,
+    required this.text,
+    required this.onPressedPlus,
+    required this.onPressedMinus,
+    this.style,
+    this.iconSize,
+  });
 
   final BorderSide? side;
   final double? width, height;
   final String text;
+  final TextStyle? style;
+  final double? iconSize;
+
   final void Function() onPressedPlus, onPressedMinus;
 
   @override
@@ -41,8 +47,6 @@ class CustomCounterContainer extends StatelessWidget {
           InkWell(
             onTap: onPressedPlus,
             child: Container(
-              width: 30.w,
-              height: 25.h,
               decoration: ShapeDecoration(
                 color: ColorsApp.kBackGroundColor,
                 shape: RoundedRectangleBorder(
@@ -52,18 +56,17 @@ class CustomCounterContainer extends StatelessWidget {
               child: Icon(
                 Icons.add,
                 color: ColorsApp.kPrimaryColor,
+                size: iconSize,
               ),
             ),
           ),
           Text(
             text,
-            style: TextStyles.white24,
+            style: style ?? TextStyles.white24,
           ),
           InkWell(
             onTap: onPressedMinus,
             child: Container(
-              width: 30.w,
-              height: 25.h,
               decoration: ShapeDecoration(
                 color: ColorsApp.kBackGroundColor,
                 shape: RoundedRectangleBorder(
@@ -73,6 +76,7 @@ class CustomCounterContainer extends StatelessWidget {
               child: Icon(
                 Icons.remove,
                 color: ColorsApp.kPrimaryColor,
+                size: iconSize,
               ),
             ),
           ),

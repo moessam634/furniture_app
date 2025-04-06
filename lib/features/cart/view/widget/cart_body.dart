@@ -1,131 +1,108 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:furniture_app/core/helper/navigation_helper.dart';
-import 'package:furniture_app/core/styles/colors_app.dart';
-import 'package:furniture_app/core/widgets/custom_rating_row.dart';
-import 'package:furniture_app/features/product_details/view/screen/product_details_screen.dart';
-import '../../../../core/styles/image_app.dart';
-import '../../../../core/styles/string_app.dart';
+import 'package:furniture_app/core/widgets/custom_button.dart';
+import 'package:furniture_app/core/widgets/custom_counter_container.dart';
+import 'package:furniture_app/core/widgets/custom_horizontal_product.dart';
+import 'package:furniture_app/features/cart/view/widget/custom_total_price.dart';
 import '../../../../core/styles/text_styles.dart';
-import '../../../../core/widgets/custom_app_bar.dart';
-import '../../../../core/widgets/custom_favorite_icon.dart';
-import '../../../../core/widgets/custom_plus_icon.dart';
 
-class CartBody extends StatelessWidget {
+class CartBody extends StatefulWidget {
   const CartBody({super.key});
 
   @override
+  State<CartBody> createState() => _CartBodyState();
+}
+
+class _CartBodyState extends State<CartBody> {
+  final ScrollController scrollController = ScrollController();
+  bool isVisible = true;
+
+  @override
+  void initState() {
+    super.initState();
+    scrollController.addListener(scrollListener);
+  }
+
+  @override
+  void dispose() {
+    scrollController.removeListener(scrollListener);
+    scrollController.dispose();
+    super.dispose();
+  }
+
+  void scrollListener() {
+    if (scrollController.position.userScrollDirection ==
+        ScrollDirection.reverse) {
+      if (isVisible) setState(() => isVisible = false);
+    } else if (scrollController.position.userScrollDirection ==
+        ScrollDirection.forward) {
+      if (!isVisible) setState(() => isVisible = true);
+    }
+
+    if (scrollController.position.pixels ==
+        scrollController.position.maxScrollExtent) {
+      if (!isVisible) setState(() => isVisible = true);
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        SizedBox(
-          height: 40,
-        ),
-        Padding(
-          padding: EdgeInsets.symmetric(horizontal: 12.w),
-          child: defaultAppBar(
-            context: context,
-            title: Text(
-              "My Cart",
-              style: TextStyles.black24,
+    return SafeArea(
+      child: Stack(
+        children: [
+          ListView.separated(
+            controller: scrollController,
+            itemCount: 10,
+            padding: EdgeInsets.only(bottom: 295.h),
+            separatorBuilder: (context, index) => SizedBox(height: 14.h),
+            itemBuilder: (context, index) => Padding(
+              padding: EdgeInsets.symmetric(horizontal: 24.w),
+              child: CustomHorizontalProduct(
+                title: 'Sofa-bed',
+                price: '\$100',
+                image: 'assets/images/sofa.png',
+                rate: "4.5",
+                addProductIcon: CustomCounterContainer(
+                  width: 56.w,
+                  height: 28.h,
+                  side: BorderSide.none,
+                  style: TextStyles.white16.copyWith(
+                    fontSize: 14.sp,
+                    fontWeight: FontWeight.w600,
+                  ),
+                  iconSize: 12.sp,
+                  text: "2",
+                  onPressedPlus: () {},
+                  onPressedMinus: () {},
+                ),
+              ),
             ),
-            action: CircleAvatar(),
           ),
-        ),
-        Row(
-          children: [
-            // Stack(
-            //   children: [
-            //     Expanded(
-            //       child: Container(
-            //         decoration: BoxDecoration(
-            //           color: Colors.red,
-            //           borderRadius: BorderRadius.only(
-            //             topLeft: Radius.circular(8.r),
-            //             bottomRight: Radius.circular(8.r),
-            //           ),
-            //           image: DecorationImage(
-            //             alignment: Alignment.center,
-            //             fit: BoxFit.contain,
-            //             image: AssetImage(
-            //               ImageApp.sofa,
-            //             ),
-            //           ),
-            //         ),
-            //       ),
-            //     ),
-            //     // Positioned(
-            //     //   top: 10.h,
-            //     //   right: 10.w,
-            //     //   child: CustomFavoriteIcon(
-            //     //     icon: ImageApp.heartIcon,
-            //     //   ),
-            //     // ),
-            //   ],
-            // ),
-            Expanded(
-              child: Container(
-                decoration: BoxDecoration(
-                  color: Colors.red,
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(8.r),
-                    bottomRight: Radius.circular(8.r),
+          AnimatedPositioned(
+            duration: Duration(milliseconds: 360),
+            curve: Curves.easeInOut,
+            bottom: isVisible ? 80.h : -190.h,
+            left: 0,
+            right: 0,
+            child: Padding(
+              padding: EdgeInsets.symmetric(
+                horizontal: 24.w,
+              ),
+              child: Column(
+                children: [
+                  CustomTotalPrice(totalPrice: "200", totalItems: "2 "),
+                  SizedBox(height: 25.h),
+                  CustomButton(
+                    text: "Check out",
+                    style: TextStyles.white18,
                   ),
-                  image: DecorationImage(
-                    alignment: Alignment.center,
-                    fit: BoxFit.contain,
-                    image: AssetImage(
-                      ImageApp.sofa,
-                    ),
-                  ),
-                ),
+                ],
               ),
             ),
-            Expanded(
-              child: Container(
-                padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 8.h),
-                // height: 80.h,
-                decoration: BoxDecoration(
-                  color: ColorsApp.kSecondaryColor,
-                  borderRadius: BorderRadius.only(
-                    topRight: Radius.circular(8.r),
-                    bottomRight: Radius.circular(8.r),
-                  ),
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      children: [
-                        Text(
-                          StringApp.sofa,
-                          style: TextStyles.black16,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                        SizedBox(
-                          width: 9.w,
-                        ),
-                        CustomRatingRow()
-                      ],
-                    ),
-                    SizedBox(height: 10.h),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          r"$100",
-                          style: TextStyles.kPrimaryColor16,
-                        ),
-                        CustomPlusIcon(),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ],
-        ),
-      ],
+          ),
+        ],
+      ),
     );
   }
 }

@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -6,6 +5,7 @@ import 'package:furniture_app/core/styles/colors_app.dart';
 import 'package:furniture_app/core/styles/image_app.dart';
 import 'package:furniture_app/core/styles/text_styles.dart';
 import 'package:furniture_app/features/cart/view/screen/cart_screen.dart';
+import 'package:furniture_app/features/favorite/view/screen/favorite_screen.dart';
 import 'package:furniture_app/features/home/view/screen/home_screen.dart';
 import 'package:furniture_app/features/profile/view/screen/profile_screen.dart';
 import 'package:furniture_app/features/switcher/cubit/switcher_cubit.dart';
@@ -18,10 +18,21 @@ class SwitcherScreen extends StatefulWidget {
   State<SwitcherScreen> createState() => SwitcherScreenState();
 }
 
+Widget _buildIcon(String iconPath, int index, int currentIndex) {
+  final color = index == currentIndex
+      ? ColorsApp.kPrimaryColor
+      : ColorsApp.kLightTextColor;
+
+  return SvgPicture.asset(
+    iconPath,
+    colorFilter: ColorFilter.mode(color, BlendMode.srcIn),
+  );
+}
+
 class SwitcherScreenState extends State<SwitcherScreen> {
-  List<Widget> screens = [
+  List<Widget> screens = const [
     HomeScreen(),
-    SizedBox(),
+    FavoriteScreen(),
     CartScreen(),
     SizedBox(),
     ProfileScreen(),
@@ -43,21 +54,34 @@ class SwitcherScreenState extends State<SwitcherScreen> {
               type: BottomNavigationBarType.fixed,
               showUnselectedLabels: true,
               fixedColor: ColorsApp.kPrimaryColor,
-              unselectedItemColor: ColorsApp.kLightTextColor,
+              selectedIconTheme: IconThemeData(
+                color: ColorsApp.kPrimaryColor,
+              ),
               selectedLabelStyle: TextStyles.kPrimaryColor10,
+              unselectedItemColor: ColorsApp.kLightTextColor,
+              unselectedLabelStyle: TextStyles.kPrimaryColor10
+                  .copyWith(color: ColorsApp.kLightTextColor),
               items: [
                 BottomNavigationBarItem(
-                    icon: SvgPicture.asset(ImageApp.homeIcon), label: "Home"),
+                    icon: _buildIcon(
+                        ImageApp.homeIcon, 0, switcherCubit.currentIndex),
+                    label: "Home"),
                 BottomNavigationBarItem(
-                    icon: Icon(CupertinoIcons.heart), label: "Favorite"),
+                    icon: _buildIcon(
+                        ImageApp.heartIcon, 1, switcherCubit.currentIndex),
+                    label: "Favorite"),
                 BottomNavigationBarItem(
-                    icon: SvgPicture.asset(ImageApp.shoppingIcon),
+                    icon: _buildIcon(ImageApp.shoppingCartIcon, 2,
+                        switcherCubit.currentIndex),
                     label: "Cart"),
                 BottomNavigationBarItem(
-                    icon: SvgPicture.asset(ImageApp.truckIcon),
+                    icon: _buildIcon(
+                        ImageApp.truckIcon, 3, switcherCubit.currentIndex),
                     label: "Order tracking"),
                 BottomNavigationBarItem(
-                    icon: Icon(CupertinoIcons.person), label: "Profile"),
+                    icon: _buildIcon(
+                        ImageApp.userIcon, 4, switcherCubit.currentIndex),
+                    label: "Profile"),
               ],
             ),
           );

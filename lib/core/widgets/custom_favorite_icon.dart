@@ -22,7 +22,7 @@ class CustomFavoriteIcon extends StatelessWidget {
         boxShadow: [
           BoxShadow(
             color: Colors.white,
-            spreadRadius: 1.r,
+            spreadRadius: .2.r,
             blurRadius: 5.r,
           ),
         ],
@@ -33,8 +33,8 @@ class CustomFavoriteIcon extends StatelessWidget {
           icon: SvgPicture.asset(
             icon,
             fit: BoxFit.contain,
-            width: width??35,
-            height: height??35,
+            width: width ?? 35,
+            height: height ?? 35,
             colorFilter:
                 ColorFilter.mode(ColorsApp.kPrimaryColor, BlendMode.srcIn),
           ),
