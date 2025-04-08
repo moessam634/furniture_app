@@ -114,9 +114,7 @@ class CustomHorizontalProduct extends StatelessWidget {
                         price,
                         style: TextStyles.kPrimaryColor16,
                       ),
-                      SizedBox(
-                        width: 40.w,
-                      ),
+                      const Spacer(),
                       Expanded(child: addProductIcon),
                     ],
                   ),

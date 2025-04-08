@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -56,28 +57,29 @@ class _CartBodyState extends State<CartBody> {
             itemCount: 10,
             padding: EdgeInsets.only(bottom: 295.h),
             separatorBuilder: (context, index) => SizedBox(height: 14.h),
-            itemBuilder: (context, index) => Padding(
-              padding: EdgeInsets.symmetric(horizontal: 24.w),
-              child: CustomHorizontalProduct(
-                title: 'Sofa-bed',
-                price: '\$100',
-                image: 'assets/images/sofa.png',
-                rate: "4.5",
-                addProductIcon: CustomCounterContainer(
-                  width: 56.w,
-                  height: 28.h,
-                  side: BorderSide.none,
-                  style: TextStyles.white16.copyWith(
-                    fontSize: 14.sp,
-                    fontWeight: FontWeight.w600,
+            itemBuilder: (context, index) =>
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 24.w),
+                  child: CustomHorizontalProduct(
+                    title: 'Sofa-bed',
+                    price: '\$100',
+                    image: 'assets/images/sofa.png',
+                    rate: "4.5",
+                    addProductIcon: CustomCounterContainer(
+                      width: 56.w,
+                      height: 28.h,
+                      side: BorderSide.none,
+                      style: TextStyles.white16.copyWith(
+                        fontSize: 14.sp,
+                        fontWeight: FontWeight.w600,
+                      ),
+                      iconSize: 12.sp,
+                      text: "2",
+                      onPressedPlus: () {},
+                      onPressedMinus: () {},
+                    ),
                   ),
-                  iconSize: 12.sp,
-                  text: "2",
-                  onPressedPlus: () {},
-                  onPressedMinus: () {},
                 ),
-              ),
-            ),
           ),
           AnimatedPositioned(
             duration: Duration(milliseconds: 360),

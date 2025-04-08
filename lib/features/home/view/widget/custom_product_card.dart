@@ -5,13 +5,21 @@ import 'package:furniture_app/core/styles/colors_app.dart';
 import 'package:furniture_app/core/widgets/custom_rating_row.dart';
 import 'package:furniture_app/features/product_details/view/screen/product_details_screen.dart';
 import '../../../../core/styles/image_app.dart';
-import '../../../../core/styles/string_app.dart';
 import '../../../../core/styles/text_styles.dart';
 import '../../../../core/widgets/custom_favorite_icon.dart';
 import '../../../../core/widgets/custom_plus_icon.dart';
 
 class CustomProductCard extends StatelessWidget {
-  const CustomProductCard({super.key});
+  const CustomProductCard(
+      {super.key,
+      required this.image,
+      required this.title,
+      required this.rate,
+      required this.price});
+
+  final String image, title;
+  final num price;
+  final num rate;
 
   @override
   Widget build(BuildContext context) {
@@ -39,8 +47,8 @@ class CustomProductCard extends StatelessWidget {
                     image: DecorationImage(
                       alignment: Alignment.center,
                       fit: BoxFit.contain,
-                      image: AssetImage(
-                        ImageApp.sofa,
+                      image: NetworkImage(
+                        image,
                       ),
                     ),
                   ),
@@ -70,15 +78,19 @@ class CustomProductCard extends StatelessWidget {
                 children: [
                   Row(
                     children: [
-                      Text(
-                        StringApp.sofa,
-                        style: TextStyles.black16,
-                        overflow: TextOverflow.ellipsis,
+                      Expanded(
+                        child: Text(
+                          title,
+                          style: TextStyles.black16,
+                          overflow: TextOverflow.ellipsis,
+                        ),
                       ),
                       SizedBox(
                         width: 9.w,
                       ),
-                      CustomRatingRow()
+                      CustomRatingRow(
+                        rate: rate.toString(),
+                      )
                     ],
                   ),
                   SizedBox(height: 10.h),
@@ -86,7 +98,7 @@ class CustomProductCard extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        r"$100",
+                        price.toString(),
                         style: TextStyles.kPrimaryColor16,
                       ),
                       CustomPlusIcon(),
