@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:furniture_app/core/styles/image_app.dart';
 import 'package:furniture_app/core/styles/text_styles.dart';
 import 'package:furniture_app/features/profile/view/widget/custom_list_tile.dart';
 
@@ -14,8 +15,30 @@ class ProfileBody extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
+            SizedBox(
+              height: 40.h,
+            ),
+            SafeArea(
+              child: Text(
+                "My Profile",
+                style: TextStyles.black24,
+              ),
+            ),
+            SizedBox(
+              height: 8.h,
+            ),
             ListTile(
-              leading: CircleAvatar(),
+              leading: Container(
+                width: 70.w,
+                height: 70.h,
+                decoration: ShapeDecoration(
+                  image: DecorationImage(
+                    image: AssetImage(ImageApp.chair),
+                    fit: BoxFit.cover,
+                  ),
+                  shape: OvalBorder(),
+                ),
+              ),
               title: Text(
                 "Omar Ali",
                 style: TextStyles.black22,
@@ -25,7 +48,10 @@ class ProfileBody extends StatelessWidget {
                 style: TextStyles.black14,
               ),
               trailing: IconButton(
-                  onPressed: () {}, icon: Icon(Icons.import_contacts_sharp)),
+
+                onPressed: () {},
+                icon: Icon(Icons.edit),
+              ),
             ),
             Divider(),
             CustomRowItem(

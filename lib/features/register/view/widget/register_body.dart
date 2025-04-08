@@ -5,32 +5,33 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:furniture_app/core/helper/navigation_helper.dart';
 import 'package:furniture_app/core/validation/auth_validation.dart';
-import 'package:furniture_app/features/login/view/screen/login_screen.dart';
-import 'package:furniture_app/features/login/view/widget/social_login_buttons.dart';
-import 'package:furniture_app/features/sign_up/cubit/register_cubit.dart';
-import 'package:furniture_app/features/sign_up/cubit/register_state.dart';
 import '../../../../core/styles/image_app.dart';
 import '../../../../core/styles/string_app.dart';
 import '../../../../core/styles/text_styles.dart';
 import '../../../../core/widgets/custom_button.dart';
 import '../../../../core/widgets/custom_column_image_text.dart';
 import '../../../../core/widgets/custom_divider_widget.dart';
-import '../../../../core/widgets/custom_snack_bar.dart';
+import '../../../../core/widgets/custom_alert_dialog.dart';
 import '../../../../core/widgets/custom_text_form_field.dart';
-import '../../../login/view/widget/custom_text_rich.dart';
-import '../screen/enter_code_sign_up.dart';
+import '../../../auth/view/screen/login_screen.dart';
+import '../../../auth/view/widget/custom_text_rich.dart';
+import '../../../auth/view/widget/social_login_buttons.dart';
+import '../../cubit/register_cubit.dart';
+import '../../cubit/register_state.dart';
 
-class SignUpBody extends StatefulWidget {
-  const SignUpBody({super.key});
+class RegisterBody extends StatefulWidget {
+  const RegisterBody({super.key});
 
   @override
-  State<SignUpBody> createState() => _SignUpBodyState();
+  State<RegisterBody> createState() => _RegisterBodyState();
 }
 
-class _SignUpBodyState extends State<SignUpBody> {
+class _RegisterBodyState extends State<RegisterBody> {
   final formKey = GlobalKey<FormState>();
   final nameController = TextEditingController();
   final emailController = TextEditingController();
+  final phoneController = TextEditingController();
+  final addressController = TextEditingController();
   final passwordController = TextEditingController();
   bool isObscure = true;
 
@@ -38,6 +39,8 @@ class _SignUpBodyState extends State<SignUpBody> {
   void dispose() {
     nameController.dispose();
     emailController.dispose();
+    phoneController.dispose();
+    addressController.dispose();
     passwordController.dispose();
     super.dispose();
   }
@@ -51,42 +54,29 @@ class _SignUpBodyState extends State<SignUpBody> {
         child: BlocConsumer<RegisterCubit, RegisterState>(
           listener: (context, state) {
             if (state is RegisterSuccess) {
-              customSnackBar(
+              showDialog(
                 context: context,
-                text: state.message,
-                backgroundColor: Colors.green,
-              );
-              NavigationHelper.pushUntil(
-                context: context,
-                destination: LoginScreen(),
+                builder: (context) => CustomAlertDialog(
+                  title: state.message,
+                  onPressed: () {
+                    NavigationHelper.pushUntil(
+                      context: context,
+                      destination: LoginScreen(),
+                    );
+                  },
+                ),
               );
             } else if (state is RegisterError) {
-              customSnackBar(
+              showDialog(
                 context: context,
-                text: state.errorMessage,
-                backgroundColor: Colors.red,
+                builder: (context) => CustomAlertDialog(
+                  title: state.errorMessage,
+                ),
               );
             }
-            // if (state is RegisterSuccess) {
-            //   if (state.userData["status"] == "success") {
-            //     customSnackBar(
-            //         context: context,
-            //         text: state.userData["message"],
-            //         backgroundColor: Colors.green);
-            //     NavigationHelper.pushUntil(
-            //       context: context,
-            //       destination: EnterCodeSignUpScreen(),
-            //     );
-            //   }
-            // } else if (state is RegisterError) {
-            //   customSnackBar(
-            //       context: context,
-            //       text: state.errorMessage,
-            //       backgroundColor: Colors.red);
-            // }
           },
           builder: (context, state) {
-            RegisterCubit registerCubit = BlocProvider.of(context);
+            RegisterCubit cubit = BlocProvider.of(context);
             return Form(
               key: formKey,
               child: SingleChildScrollView(
@@ -115,13 +105,32 @@ class _SignUpBodyState extends State<SignUpBody> {
                       height: 15.h,
                     ),
                     CustomTextFormField(
-                      hintText: StringApp.emailOrPhone,
+                      hintText: StringApp.email,
                       controller: emailController,
                       keyboardType: TextInputType.emailAddress,
                       validator: (value) {
                         return MyValidators.emailValidator(value);
                       },
                     ),
+                    SizedBox(
+                      height: 15.h,
+                    ),
+                    CustomTextFormField(
+                      hintText: "Phone",
+                      controller: phoneController,
+                      keyboardType: TextInputType.number,
+                      validator: (value) {
+                        return MyValidators.phoneValidator(value);
+                      },
+                    ),
+                    SizedBox(
+                      height: 15.h,
+                    ),
+                    CustomTextFormField(
+                        hintText: "Address",
+                        controller: addressController,
+                        keyboardType: TextInputType.text,
+                        validator: MyValidators.fullNameValidator),
                     SizedBox(
                       height: 15.h,
                     ),
@@ -150,26 +159,26 @@ class _SignUpBodyState extends State<SignUpBody> {
                     SizedBox(
                       height: 20.h,
                     ),
-                    // state is RegisterLoading
-                    //     ? SpinKitFadingCircle(
-                    //         color: Colors.grey,
-                    //         size: 35,
-                    //       )
-                    //     :
-                    CustomButton(
-                      text: StringApp.verify,
-                      style: TextStyles.white18,
-                      onTap: () {
-                        if (formKey.currentState!.validate()) {
-                          registerCubit.registerCubit(
-                              name: nameController.text,
-                              emailOrPhone: emailController.text,
-                              password: passwordController.text);
-                        }
-                        // NavigationHelper.push(
-                        //     context: context, destination: LoginScreen());
-                      },
-                    ),
+                    state is RegisterLoading
+                        ? SpinKitFadingCircle(
+                            color: Colors.grey,
+                            size: 35,
+                          )
+                        : CustomButton(
+                            text: StringApp.verify,
+                            style: TextStyles.white18,
+                            onTap: () {
+                              if (formKey.currentState!.validate()) {
+                                cubit.registerCubit(
+                                  name: nameController.text,
+                                  emailOrPhone: emailController.text,
+                                  password: passwordController.text,
+                                  phone: phoneController.text,
+                                  address: addressController.text,
+                                );
+                              }
+                            },
+                          ),
                     SizedBox(
                       height: 20.h,
                     ),

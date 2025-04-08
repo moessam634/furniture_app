@@ -54,9 +54,6 @@ class SwitcherScreenState extends State<SwitcherScreen> {
               type: BottomNavigationBarType.fixed,
               showUnselectedLabels: true,
               fixedColor: ColorsApp.kPrimaryColor,
-              selectedIconTheme: IconThemeData(
-                color: ColorsApp.kPrimaryColor,
-              ),
               selectedLabelStyle: TextStyles.kPrimaryColor10,
               unselectedItemColor: ColorsApp.kLightTextColor,
               unselectedLabelStyle: TextStyles.kPrimaryColor10

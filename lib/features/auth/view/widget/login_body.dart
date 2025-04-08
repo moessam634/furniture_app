@@ -2,24 +2,24 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:furniture_app/core/helper/navigation_helper.dart';
 import 'package:furniture_app/core/validation/auth_validation.dart';
+import 'package:furniture_app/features/auth/view/widget/social_login_buttons.dart';
 import 'package:furniture_app/features/forget_password/view/screen/forget_screen.dart';
-import 'package:furniture_app/features/login/cubit/login_cubit.dart';
-import 'package:furniture_app/features/login/cubit/login_state.dart';
-import 'package:furniture_app/features/login/view/widget/custom_text_rich.dart';
-import 'package:furniture_app/features/login/view/widget/social_login_buttons.dart';
-import 'package:furniture_app/features/sign_up/view/screen/sign_up_screen.dart';
-import 'package:furniture_app/features/switcher/view/screen/switcher_screen.dart';
-import '../../../../core/styles/colors_app.dart';
+import 'package:furniture_app/features/home/view/screen/home_screen.dart';
+import 'package:furniture_app/features/register/view/screen/register_screen.dart';
 import '../../../../core/styles/image_app.dart';
 import '../../../../core/styles/string_app.dart';
 import '../../../../core/styles/text_styles.dart';
 import '../../../../core/widgets/custom_button.dart';
 import '../../../../core/widgets/custom_column_image_text.dart';
 import '../../../../core/widgets/custom_divider_widget.dart';
-import '../../../../core/widgets/custom_snack_bar.dart';
+import '../../../../core/widgets/custom_alert_dialog.dart';
 import '../../../../core/widgets/custom_text_form_field.dart';
+import '../../cubit/login_cubit.dart';
+import '../../cubit/login_state.dart';
+import 'custom_text_rich.dart';
 
 class LoginBody extends StatefulWidget {
   const LoginBody({super.key});
@@ -50,20 +50,25 @@ class _LoginBodyState extends State<LoginBody> {
         child: BlocConsumer<LoginCubit, LoginState>(
           listener: (context, state) {
             if (state is LoginSuccess) {
-              if (state.user["status"] == "success") {
-                customSnackBar(
-                    context: context,
-                    text: state.user["message"],
-                    backgroundColor: Colors.green);
-                NavigationHelper.pushUntil(
-                    context: context, destination: SwitcherScreen());
-              }
-              if (state.user["status"] == "error") {
-                customSnackBar(
-                    context: context,
-                    text: state.user["message"],
-                    backgroundColor: Colors.red);
-              }
+              showDialog(
+                context: context,
+                builder: (context) => CustomAlertDialog(
+                  title: state.loginModel.message.toString(),
+                  onPressed: () {
+                    NavigationHelper.pushUntil(
+                      context: context,
+                      destination: HomeScreen(),
+                    );
+                  },
+                ),
+              );
+            } else if (state is LoginError) {
+              showDialog(
+                context: context,
+                builder: (context) => CustomAlertDialog(
+                  title: state.errorMessage,
+                ),
+              );
             }
           },
           builder: (context, state) {
@@ -84,12 +89,10 @@ class _LoginBodyState extends State<LoginBody> {
                     height: 25.h,
                   ),
                   CustomTextFormField(
-                    hintText: AutofillHints.email,
+                    hintText: AutofillHints.username,
                     controller: emailController,
                     keyboardType: TextInputType.emailAddress,
-                    validator: (value) {
-                      return MyValidators.fullNameValidator(value);
-                    },
+                    validator: MyValidators.fullNameValidator,
                   ),
                   SizedBox(
                     height: 15.h,
@@ -99,9 +102,7 @@ class _LoginBodyState extends State<LoginBody> {
                     controller: passwordController,
                     keyboardType: TextInputType.visiblePassword,
                     obscureText: isObscure,
-                    validator: (value) {
-                      return MyValidators.passwordValidator(value);
-                    },
+                    validator: MyValidators.passwordValidator,
                     suffixIcon: IconButton(
                       onPressed: () {
                         setState(() {
@@ -131,19 +132,23 @@ class _LoginBodyState extends State<LoginBody> {
                   SizedBox(
                     height: 12.h,
                   ),
-                  CustomButton(
-                    text: StringApp.logIn,
-                    style: TextStyles.white18,
-                    onTap: () {
-                      if (formKey.currentState!.validate()) {
-                        cubit.loginData.loginData(
-                            name: emailController.text,
-                            password: passwordController.text);
-                        NavigationHelper.pushReplacement(
-                            context: context, destination: SwitcherScreen());
-                      }
-                    },
-                  ),
+                  state is LoginLoading
+                      ? SpinKitFadingCircle(
+                          color: Colors.grey,
+                          size: 35,
+                        )
+                      : CustomButton(
+                          text: StringApp.logIn,
+                          style: TextStyles.white18,
+                          onTap: () {
+                            if (formKey.currentState!.validate()) {
+                              cubit.login(
+                                name: emailController.text,
+                                password: passwordController.text,
+                              );
+                            }
+                          },
+                        ),
                   SizedBox(
                     height: 20.h,
                   ),
@@ -162,7 +167,7 @@ class _LoginBodyState extends State<LoginBody> {
                   CustomTextRich(
                     text1: StringApp.doNotHavAnAcc,
                     text2: StringApp.signUp,
-                    navigateTo: const SignUpScreen(),
+                    navigateTo: const RegisterScreen(),
                   ),
                 ],
               ),
