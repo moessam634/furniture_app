@@ -1,149 +1,119 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:furniture_app/core/styles/image_app.dart';
 import 'package:furniture_app/core/styles/text_styles.dart';
-import 'package:furniture_app/features/profile/view/widget/custom_list_tile.dart';
+import 'package:furniture_app/features/profile/view/widget/custom_row_item.dart';
+import 'custom_log_out_dialog.dart';
 
 class ProfileBody extends StatelessWidget {
   const ProfileBody({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 24.w),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            SizedBox(
-              height: 40.h,
-            ),
-            SafeArea(
-              child: Text(
+    return SafeArea(
+      child: SingleChildScrollView(
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 24.w),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            spacing: 20.h,
+            children: [
+              SizedBox(
+                height: 10.h,
+              ),
+              Text(
                 "My Profile",
                 style: TextStyles.black24,
               ),
-            ),
-            SizedBox(
-              height: 8.h,
-            ),
-            ListTile(
-              leading: Container(
-                width: 70.w,
-                height: 70.h,
-                decoration: ShapeDecoration(
-                  image: DecorationImage(
-                    image: AssetImage(ImageApp.chair),
+              ListTile(
+                horizontalTitleGap: 0,
+                contentPadding: EdgeInsets.only(right: 20.w),
+                leading: Container(
+                  width: 70.w,
+                  height: 70.h,
+                  child: Image.asset(
+                    ImageApp.chair,
                     fit: BoxFit.cover,
                   ),
-                  shape: OvalBorder(),
+                ),
+                title: Text(
+                  "Omar Ali",
+                  style: TextStyles.black22,
+                ),
+                subtitle: Text(
+                  "OmarAli2000@gmail.com",
+                  style: TextStyles.black14,
+                ),
+                trailing: IconButton(
+                  onPressed: () {},
+                  icon: SvgPicture.asset(
+                    ImageApp.editIcon,
+                  ),
                 ),
               ),
-              title: Text(
-                "Omar Ali",
-                style: TextStyles.black22,
+              Divider(),
+              CustomRowItem(
+                leadingIcon: Icons.battery_charging_full,
+                text: 'History of order',
+                onTap: () {},
               ),
-              subtitle: Text(
-                "OmarAli2000@gmail.com",
-                style: TextStyles.black14,
+              CustomRowItem(
+                leadingIcon: Icons.credit_card,
+                text: 'Payment methods',
+                onTap: () {},
               ),
-              trailing: IconButton(
-
-                onPressed: () {},
-                icon: Icon(Icons.edit),
+              CustomRowItem(
+                leadingIcon: Icons.notifications_none_outlined,
+                text: 'Notifications',
+                onTap: () {},
               ),
-            ),
-            Divider(),
-            CustomRowItem(
-              leadingIcon: Icons.battery_0_bar,
-              text: 'History of order',
-              iconButton: IconButton(
-                onPressed: () {},
-                icon: Icon(Icons.edgesensor_high),
+              CustomRowItem(
+                leadingIcon: CupertinoIcons.arrow_2_circlepath,
+                text: 'Reward card',
+                onTap: () {},
               ),
-            ),
-            SizedBox(height: 12.h),
-            CustomRowItem(
-              leadingIcon: Icons.battery_0_bar,
-              text: 'History of order',
-              iconButton: IconButton(
-                onPressed: () {},
-                icon: Icon(Icons.edgesensor_high),
+              CustomRowItem(
+                leadingIcon: Icons.abc,
+                text: 'Promo code',
+                onTap: () {},
               ),
-            ),
-            SizedBox(height: 12.h),
-            CustomRowItem(
-              leadingIcon: Icons.battery_0_bar,
-              text: 'History of order',
-              iconButton: IconButton(
-                onPressed: () {},
-                icon: Icon(Icons.edgesensor_high),
+              CustomRowItem(
+                leadingIcon: Icons.privacy_tip_outlined,
+                text: 'Privacy & policy',
+                onTap: () {},
               ),
-            ),
-            SizedBox(height: 12.h),
-            CustomRowItem(
-              leadingIcon: Icons.battery_0_bar,
-              text: 'History of order',
-              iconButton: IconButton(
-                onPressed: () {},
-                icon: Icon(Icons.edgesensor_high),
+              CustomRowItem(
+                leadingIcon: Icons.language,
+                text: 'Language',
+                onTap: () {},
               ),
-            ),
-            SizedBox(height: 12.h),
-            CustomRowItem(
-              leadingIcon: Icons.battery_0_bar,
-              text: 'History of order',
-              iconButton: IconButton(
-                onPressed: () {},
-                icon: Icon(Icons.edgesensor_high),
+              CustomRowItem(
+                leadingIcon: Icons.help_outline,
+                text: 'Help',
+                onTap: () {},
               ),
-            ),
-            SizedBox(height: 12.h),
-            CustomRowItem(
-              leadingIcon: Icons.battery_0_bar,
-              text: 'History of order',
-              iconButton: IconButton(
-                onPressed: () {},
-                icon: Icon(Icons.edgesensor_high),
+              CustomRowItem(
+                leadingIcon: Icons.share_outlined,
+                text: 'Share app',
+                onTap: () {},
               ),
-            ),
-            SizedBox(height: 12.h),
-            CustomRowItem(
-              leadingIcon: Icons.battery_0_bar,
-              text: 'History of order',
-              iconButton: IconButton(
-                onPressed: () {},
-                icon: Icon(Icons.edgesensor_high),
+              CustomRowItem(
+                leadingIcon: Icons.login,
+                text: 'Log out',
+                onTap: () {
+                  showDialog(
+                    context: context,
+                    builder: (context) => CustomLogOutDialog(
+                      title: "Log out",
+                      subtitle: 'Are you sure you want to\nlog out?',
+                    ),
+                  );
+                },
               ),
-            ),
-            SizedBox(height: 12.h),
-            CustomRowItem(
-              leadingIcon: Icons.battery_0_bar,
-              text: 'History of order',
-              iconButton: IconButton(
-                onPressed: () {},
-                icon: Icon(Icons.edgesensor_high),
-              ),
-            ),
-            SizedBox(height: 12.h),
-            CustomRowItem(
-              leadingIcon: Icons.battery_0_bar,
-              text: 'History of order',
-              iconButton: IconButton(
-                onPressed: () {},
-                icon: Icon(Icons.edgesensor_high),
-              ),
-            ),
-            SizedBox(height: 12.h),
-            CustomRowItem(
-              leadingIcon: Icons.battery_0_bar,
-              text: 'History of order',
-              iconButton: IconButton(
-                onPressed: () {},
-                icon: Icon(Icons.edgesensor_high),
-              ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
