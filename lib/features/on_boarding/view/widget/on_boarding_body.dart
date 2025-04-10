@@ -9,8 +9,7 @@ import 'package:furniture_app/core/widgets/custom_column_image_text.dart';
 import 'package:furniture_app/features/on_boarding/view/widget/custom_on_boarding_button.dart';
 import 'package:furniture_app/features/on_boarding/view/widget/global_header.dart';
 import 'package:introduction_screen/introduction_screen.dart';
-
-import '../../../auth/view/screen/login_screen.dart';
+import '../../../auth/login/view/screen/login_screen.dart';
 
 class OnBoardingBody extends StatefulWidget {
   const OnBoardingBody({super.key});

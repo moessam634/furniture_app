@@ -8,6 +8,4 @@ class ColorsApp {
   static const Color kBackGroundColor = Color(0xFFF1F4F4);
   static const Color kPinPutColor = Color(0xff414141);
   static const Color kLightPrimaryColor = Color(0xff73888A);
-  static const Color kCounterColor = Color(0xFF73888A);
-
 }

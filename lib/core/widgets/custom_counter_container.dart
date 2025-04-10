@@ -30,7 +30,7 @@ class CustomCounterContainer extends StatelessWidget {
       width: width ?? 150.w,
       height: height ?? 55.h,
       decoration: ShapeDecoration(
-        color: ColorsApp.kCounterColor,
+        color: ColorsApp.kLightPrimaryColor,
         shape: RoundedRectangleBorder(
           side: side ??
               BorderSide(
