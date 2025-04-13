@@ -2,13 +2,27 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:furniture_app/core/helper/navigation_helper.dart';
 import 'package:furniture_app/core/styles/image_app.dart';
 import 'package:furniture_app/core/styles/text_styles.dart';
+import 'package:furniture_app/features/auth/login/view/screen/login_screen.dart';
 import 'package:furniture_app/features/profile/view/widget/custom_row_item.dart';
+import '../../../../core/utils/service_locator.dart';
+import '../../../../core/utils/storage_helper.dart';
 import 'custom_log_out_dialog.dart';
 
 class ProfileBody extends StatelessWidget {
   const ProfileBody({super.key});
+
+  Future<void> logout({required BuildContext context}) async {
+    await sl<StorageHelper>().removeToken();
+    if (context.mounted) {
+      await NavigationHelper.pushUntil(
+        context: context,
+        destination: LoginScreen(),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -29,8 +43,11 @@ class ProfileBody extends StatelessWidget {
               ),
               ListTile(
                 horizontalTitleGap: 0,
-                contentPadding: EdgeInsets.only(right: 20.w),
+                contentPadding: EdgeInsets.all(0),
                 leading: Container(
+                  decoration: ShapeDecoration(
+                    shape: OvalBorder(),
+                  ),
                   width: 70.w,
                   height: 70.h,
                   child: Image.asset(
@@ -106,9 +123,11 @@ class ProfileBody extends StatelessWidget {
                   showDialog(
                     context: context,
                     builder: (context) => CustomLogOutDialog(
-                      title: "Log out",
-                      subtitle: 'Are you sure you want to\nlog out?',
-                    ),
+                        title: "Log out",
+                        subtitle: 'Are you sure you want to\nlog out?',
+                        onTap: () async {
+                          await logout(context: context);
+                        }),
                   );
                 },
               ),
