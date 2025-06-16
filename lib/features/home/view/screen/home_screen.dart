@@ -3,9 +3,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:furniture_app/core/styles/string_app.dart';
 import 'package:furniture_app/core/styles/text_styles.dart';
-import 'package:furniture_app/features/home/home_cubit/products_cubit/home_cubit.dart';
+import 'package:furniture_app/features/cart/cubit/cart_cubit.dart';
+import 'package:furniture_app/features/home/home_cubit/products_cubit/product_cubit.dart';
 import 'package:furniture_app/features/home/view/widget/home_body.dart';
-
+import '../../../../core/utils/service_locator.dart';
 import '../../home_cubit/categories_cubit/categories_cubit.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -37,8 +38,9 @@ class HomeScreen extends StatelessWidget {
       ),
       body: MultiBlocProvider(
         providers: [
-          BlocProvider(create: (context) => CategoriesCubit()),
-          BlocProvider(create: (context) => ProductsCubit()),
+          BlocProvider(create: (context) => sl<CategoriesCubit>()),
+          BlocProvider(create: (context) => sl<ProductsCubit>()),
+          BlocProvider(create: (context) => sl<CartCubit>()),
         ],
         child: HomeBody(),
       ),

@@ -1,6 +1,20 @@
-part of 'favorite_cubit.dart';
+import 'package:furniture_app/features/home/model/home_model/product_model.dart';
 
-@immutable
-sealed class FavoriteState {}
+import '../../cart/model/model/cart_products_model.dart';
 
-final class FavoriteInitial extends FavoriteState {}
+abstract class FavoriteState {}
+
+class FavoriteInitial extends FavoriteState {}
+
+class FavoriteLoading extends FavoriteState {}
+
+class FavoriteLoaded extends FavoriteState {
+  final List<ProductModel> allFavorites;
+  final List<ProductModel> filteredFavorites;
+  final String searchQuery;
+
+  FavoriteLoaded(
+      {required this.allFavorites,
+        required this.filteredFavorites,
+        this.searchQuery = ''});
+}

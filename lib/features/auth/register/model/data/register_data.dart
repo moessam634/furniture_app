@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:furniture_app/core/networking/api_endpoints.dart';
 import '../register_model/register_model.dart';
 
 class RegisterData {
@@ -13,7 +14,7 @@ class RegisterData {
   }) async {
     try {
       final response = await dio.post(
-        "https://zbooma.com/furniture_api/auth/register.php",
+        ApiEndpoints.register,
         data: {
           "name": name,
           "email": email,
@@ -37,8 +38,7 @@ class RegisterData {
         }
         if (res.statusCode == 500) {
           return RegisterResponse(
-              status: "error",
-              message: "الرجاء تغيير الاسم.");
+              status: "error", message: "الرجاء تغيير الاسم.");
         }
         return RegisterResponse.fromJson(res.data);
       } else {

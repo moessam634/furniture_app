@@ -7,6 +7,7 @@ import 'package:furniture_app/features/home/view/screen/home_screen.dart';
 import 'package:furniture_app/features/product_details/view/screen/product_details_screen.dart';
 import 'package:furniture_app/features/splash/view/screen/splash_screen.dart';
 import 'package:furniture_app/features/switcher/view/screen/switcher_screen.dart';
+import 'features/check_out/view/screen/congratulation_screen.dart';
 import 'features/product_details/view/widget/custom_circle_container.dart';
 import 'features/product_details/view/widget/image_preview.dart';
 
@@ -26,7 +27,7 @@ class MyApp extends StatelessWidget {
           home: child,
         );
       },
-      child: SwitcherScreen(),
+      child: SplashScreen(),
     );
   }
 }

@@ -34,7 +34,6 @@ class SwitcherScreenState extends State<SwitcherScreen> {
     HomeScreen(),
     FavoriteScreen(),
     CartScreen(),
-    SizedBox(),
     ProfileScreen(),
   ];
 
@@ -71,10 +70,6 @@ class SwitcherScreenState extends State<SwitcherScreen> {
                     icon: _buildIcon(ImageApp.shoppingCartIcon, 2,
                         switcherCubit.currentIndex),
                     label: "Cart"),
-                BottomNavigationBarItem(
-                    icon: _buildIcon(
-                        ImageApp.truckIcon, 3, switcherCubit.currentIndex),
-                    label: "Order tracking"),
                 BottomNavigationBarItem(
                     icon: _buildIcon(
                         ImageApp.userIcon, 4, switcherCubit.currentIndex),

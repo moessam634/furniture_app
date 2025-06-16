@@ -36,7 +36,8 @@ class CustomTotalPrice extends StatelessWidget {
                   style: TextStyles.black20,
                 ),
                 Text(
-                  "\$$totalPrice",
+                  "\$ ${double.parse(totalPrice).toStringAsFixed(1).toString()}",
+
                   style: TextStyles.kPrimaryColor24
                       .copyWith(fontSize: 22, fontWeight: FontWeight.w600),
                 ),
@@ -50,7 +51,7 @@ class CustomTotalPrice extends StatelessWidget {
                       .copyWith(color: ColorsApp.kLightTextColor),
                 ),
                 Text(
-                  r"items",
+                  r" items",
                   style: TextStyles.black18
                       .copyWith(color: ColorsApp.kLightTextColor),
                 ),

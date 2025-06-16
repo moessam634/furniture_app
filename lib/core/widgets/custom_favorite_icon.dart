@@ -8,8 +8,14 @@ class CustomFavoriteIcon extends StatelessWidget {
   final String icon;
   final double? width, height;
 
+
   const CustomFavoriteIcon(
-      {super.key, this.onPressed, required this.icon, this.width, this.height});
+      {super.key,
+      this.onPressed,
+      required this.icon,
+      this.width,
+      this.height,
+      });
 
   @override
   Widget build(BuildContext context) {
@@ -32,12 +38,11 @@ class CustomFavoriteIcon extends StatelessWidget {
           onPressed: onPressed,
           icon: SvgPicture.asset(
             icon,
-            fit: BoxFit.contain,
-            width: width ?? 35,
-            height: height ?? 35,
-            colorFilter:
-                ColorFilter.mode(ColorsApp.kPrimaryColor, BlendMode.srcIn),
-          ),
+              fit: BoxFit.contain,
+              width: width ?? 35,
+              height: height ?? 35,
+              colorFilter:
+                  ColorFilter.mode(ColorsApp.kPrimaryColor, BlendMode.srcIn)),
         ),
       ),
     );

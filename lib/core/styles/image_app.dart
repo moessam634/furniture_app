@@ -23,6 +23,7 @@ class ImageApp {
   static const String fourth = "${imagePath}fourth.png";
   static const String fifth = "${imagePath}fifth.png";
   static const String heartIcon = "${imagePath}heart_icon.svg";
+  static const String filledHeart = "${imagePath}filledHeart.svg";
   static const String plusIcon = "${imagePath}plus.svg";
   static const String homeIcon = "${imagePath}home_icon.svg";
   static const String truckIcon = "${imagePath}truck-fast-outline.svg";
@@ -33,6 +34,8 @@ class ImageApp {
   static const String rectangleImage = "${imagePath}Rectangle 47.png";
   static const String shoppingCartIcon = "${imagePath}shopping-cart.svg";
   static const String editIcon = "${imagePath}editIcon.svg";
+  static const String profileImage = "${imagePath}profileImage.png";
+  static const String congratulationImage = "${imagePath}congratulation.png";
   static const String shoppingIcon =
       "${imagePath}material-symbols_shopping-cart-outline.svg";
 }

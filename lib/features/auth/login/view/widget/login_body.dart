@@ -12,6 +12,7 @@ import 'package:furniture_app/features/switcher/view/screen/switcher_screen.dart
 import '../../../../../core/styles/image_app.dart';
 import '../../../../../core/styles/string_app.dart';
 import '../../../../../core/styles/text_styles.dart';
+import '../../../../../core/utils/service_locator.dart';
 import '../../../../../core/widgets/custom_alert_dialog.dart';
 import '../../../../../core/widgets/custom_button.dart';
 import '../../../../../core/widgets/custom_column_image_text.dart';
@@ -47,7 +48,7 @@ class _LoginBodyState extends State<LoginBody> {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 24.w),
       child: BlocProvider(
-        create: (context) => LoginCubit(),
+        create: (context) => LoginCubit(sl()),
         child: BlocConsumer<LoginCubit, LoginState>(
           listener: (context, state) {
             if (state is LoginSuccess) {

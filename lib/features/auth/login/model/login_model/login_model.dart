@@ -1,15 +1,10 @@
 class LoginModel {
   String? status;
   String? message;
-  User? user;
   String? token;
+  User? user;
 
-  LoginModel({
-    this.status,
-    this.message,
-    this.user,
-    this.token,
-  });
+  LoginModel({this.status, this.message, this.token, this.user});
 
   factory LoginModel.fromJson(Map<String, dynamic> json) => LoginModel(
         status: json["status"],
@@ -30,18 +25,10 @@ class User {
   int? id;
   String? name;
 
-  User({
-    this.id,
-    this.name,
-  });
+  User({this.id, this.name});
 
-  factory User.fromJson(Map<String, dynamic> json) => User(
-        id: json["id"],
-        name: json["name"],
-      );
+  factory User.fromJson(Map<String, dynamic> json) =>
+      User(id: json["id"], name: json["name"]);
 
-  Map<String, dynamic> toJson() => {
-        "id": id,
-        "name": name,
-      };
+  Map<String, dynamic> toJson() => {"id": id, "name": name};
 }

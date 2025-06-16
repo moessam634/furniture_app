@@ -4,14 +4,14 @@ import '../model/login_model/login_model.dart';
 import 'login_state.dart';
 
 class LoginCubit extends Cubit<LoginState> {
-  LoginCubit() : super(LoginInitial());
-  LoginData loginData = LoginData();
+  LoginCubit(this._loginData) : super(LoginInitial());
+  final LoginData _loginData;
 
   void login({required String name, required String password}) async {
     emit(LoginLoading());
     try {
       final LoginModel response =
-          await loginData.login(name: name, password: password);
+          await _loginData.login(name: name, password: password);
       if (response.status == "success") {
         emit(LoginSuccess(response));
       } else {

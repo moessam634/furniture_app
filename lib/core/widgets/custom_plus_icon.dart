@@ -5,9 +5,10 @@ import '../styles/colors_app.dart';
 import '../styles/image_app.dart';
 
 class CustomPlusIcon extends StatelessWidget {
-  const CustomPlusIcon({super.key, this.onTap});
+  const CustomPlusIcon({super.key, this.onTap, this.image});
 
   final void Function()? onTap;
+  final String? image;
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +23,7 @@ class CustomPlusIcon extends StatelessWidget {
         ),
         child: Center(
           child: SvgPicture.asset(
-            ImageApp.plusIcon,
+          image??  ImageApp.plusIcon,
           ),
         ),
       ),

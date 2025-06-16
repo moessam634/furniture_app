@@ -11,7 +11,7 @@ class CustomCategoryItem extends StatelessWidget {
   const CustomCategoryItem({
     super.key,
     required this.name,
-    required this.isSelected,
+    this.isSelected = false,
     required this.onTap,
   });
 
@@ -20,7 +20,10 @@ class CustomCategoryItem extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 6.h),
+        padding: EdgeInsets.symmetric(
+          horizontal: 16.w,
+        ),
+        alignment: Alignment.center,
         decoration: BoxDecoration(
           color: isSelected ? ColorsApp.kPrimaryColor : Colors.white,
           borderRadius: BorderRadius.circular(100.r),

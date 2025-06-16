@@ -5,9 +5,13 @@ sealed class ProductState {}
 final class ProductLoadingState extends ProductState {}
 
 final class ProductSuccessState extends ProductState {
-  List<ProductModel> products;
+  final List<ProductModel> products;
 
   ProductSuccessState({required this.products});
 }
 
-final class ProductFailureState extends ProductState {}
+final class ProductFailureState extends ProductState {
+  final String errorMessage;
+
+  ProductFailureState({required this.errorMessage});
+}

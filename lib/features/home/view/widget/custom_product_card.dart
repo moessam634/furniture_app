@@ -1,25 +1,32 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:furniture_app/core/helper/navigation_helper.dart';
 import 'package:furniture_app/core/styles/colors_app.dart';
-import 'package:furniture_app/core/widgets/custom_rating_row.dart';
-import 'package:furniture_app/features/product_details/view/screen/product_details_screen.dart';
+import 'package:furniture_app/core/widgets/custom_network_image.dart';
 import '../../../../core/styles/image_app.dart';
 import '../../../../core/styles/text_styles.dart';
 import '../../../../core/widgets/custom_favorite_icon.dart';
 import '../../../../core/widgets/custom_plus_icon.dart';
+import '../../../favorite/cubit/favorite_cubit.dart';
 
 class CustomProductCard extends StatelessWidget {
-  const CustomProductCard(
-      {super.key,
-      required this.image,
-      required this.title,
-      required this.rate,
-      required this.price});
+  const CustomProductCard({
+    super.key,
+    required this.image,
+    required this.title,
+    required this.price,
+    required this.onTap,
+    required this.onPressed,
+    required this.onIconPressed,
+    required this.isFavorite,
+  });
 
   final String image, title;
-  final num price;
-  final num rate;
+  final String price;
+  final void Function() onTap;
+  final void Function() onPressed;
+  final void Function() onIconPressed;
+  final bool isFavorite;
 
   @override
   Widget build(BuildContext context) {
@@ -27,10 +34,7 @@ class CustomProductCard extends StatelessWidget {
       width: 127.w,
       height: 204.h,
       child: InkWell(
-        onTap: () {
-          NavigationHelper.push(
-              context: context, destination: ProductDetailsScreen());
-        },
+        onTap: onTap,
         child: Column(
           children: [
             Stack(
@@ -44,20 +48,15 @@ class CustomProductCard extends StatelessWidget {
                       topLeft: Radius.circular(8.r),
                       topRight: Radius.circular(8.r),
                     ),
-                    image: DecorationImage(
-                      alignment: Alignment.center,
-                      fit: BoxFit.contain,
-                      image: NetworkImage(
-                        image,
-                      ),
-                    ),
                   ),
+                  child: CustomNetworkImage(image: image),
                 ),
                 Positioned(
                   top: 10.h,
                   right: 10.w,
                   child: CustomFavoriteIcon(
-                    icon: ImageApp.heartIcon,
+                    icon: isFavorite?ImageApp.filledHeart:ImageApp.heartIcon,
+                    onPressed: onIconPressed,
                   ),
                 ),
               ],
@@ -76,33 +75,29 @@ class CustomProductCard extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Row(
-                    children: [
-                      Expanded(
-                        child: Text(
-                          title,
-                          style: TextStyles.black16,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      ),
-                      SizedBox(
-                        width: 9.w,
-                      ),
-                      CustomRatingRow(
-                        rate: rate.toString(),
-                      )
-                    ],
+                  Expanded(
+                    child: Text(
+                      title,
+                      style: TextStyles.black16,
+                      overflow: TextOverflow.ellipsis,
+                    ),
                   ),
                   SizedBox(height: 10.h),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        price.toString(),
-                        style: TextStyles.kPrimaryColor16,
-                      ),
-                      CustomPlusIcon(),
-                    ],
+                  Expanded(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Flexible(
+                          child: Text(
+                            price,
+                            style: TextStyles.kPrimaryColor16,
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 1,
+                          ),
+                        ),
+                        CustomPlusIcon(onTap: onPressed),
+                      ],
+                    ),
                   ),
                 ],
               ),

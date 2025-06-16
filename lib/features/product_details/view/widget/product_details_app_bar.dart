@@ -4,9 +4,10 @@ import '../../../../core/styles/image_app.dart';
 import '../../../../core/widgets/custom_favorite_icon.dart';
 
 class ProductDetailsAppBar extends StatelessWidget {
-  const ProductDetailsAppBar({super.key, this.onPressed});
+  const ProductDetailsAppBar({super.key, this.onPressed, required this.icon});
 
   final void Function()? onPressed;
+  final String icon;
 
   @override
   Widget build(BuildContext context) {
@@ -23,8 +24,9 @@ class ProductDetailsAppBar extends StatelessWidget {
             CustomFavoriteIcon(
               width: 50.w,
               height: 50.h,
-              icon: ImageApp.heartIcon,
+              icon: icon,
               onPressed: onPressed,
+              // isFavorite: true,
             ),
           ],
         ),

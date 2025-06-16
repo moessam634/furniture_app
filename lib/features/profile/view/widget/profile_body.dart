@@ -6,6 +6,7 @@ import 'package:furniture_app/core/helper/navigation_helper.dart';
 import 'package:furniture_app/core/styles/image_app.dart';
 import 'package:furniture_app/core/styles/text_styles.dart';
 import 'package:furniture_app/features/auth/login/view/screen/login_screen.dart';
+import 'package:furniture_app/features/profile/view/screen/edit_profile_screen.dart';
 import 'package:furniture_app/features/profile/view/widget/custom_row_item.dart';
 import '../../../../core/utils/service_locator.dart';
 import '../../../../core/utils/storage_helper.dart';
@@ -64,7 +65,10 @@ class ProfileBody extends StatelessWidget {
                   style: TextStyles.black14,
                 ),
                 trailing: IconButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    NavigationHelper.push(
+                        context: context, destination: EditProfileScreen());
+                  },
                   icon: SvgPicture.asset(
                     ImageApp.editIcon,
                   ),
