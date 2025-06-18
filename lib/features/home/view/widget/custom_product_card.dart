@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:furniture_app/core/styles/colors_app.dart';
 import 'package:furniture_app/core/widgets/custom_network_image.dart';
@@ -7,7 +6,6 @@ import '../../../../core/styles/image_app.dart';
 import '../../../../core/styles/text_styles.dart';
 import '../../../../core/widgets/custom_favorite_icon.dart';
 import '../../../../core/widgets/custom_plus_icon.dart';
-import '../../../favorite/cubit/favorite_cubit.dart';
 
 class CustomProductCard extends StatelessWidget {
   const CustomProductCard({
@@ -39,24 +37,25 @@ class CustomProductCard extends StatelessWidget {
           children: [
             Stack(
               children: [
-                Container(
-                  width: 127.w,
-                  height: 124.h,
-                  decoration: BoxDecoration(
-                    color: ColorsApp.kBackGroundColor,
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(8.r),
-                      topRight: Radius.circular(8.r),
-                    ),
+                ClipRRect(
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(8.r),
+                    topRight: Radius.circular(8.r),
                   ),
-                  child: CustomNetworkImage(image: image),
+                  child: SizedBox(
+                      width: double.infinity,
+                      height: 124.h,
+                      child: CustomNetworkImage(image: image)),
                 ),
                 Positioned(
                   top: 10.h,
                   right: 10.w,
                   child: CustomFavoriteIcon(
-                    icon: isFavorite?ImageApp.filledHeart:ImageApp.heartIcon,
+                    icon:
+                        isFavorite ? ImageApp.filledHeart : ImageApp.heartIcon,
                     onPressed: onIconPressed,
+                    width: 33.w,
+                    height: 35.h,
                   ),
                 ),
               ],

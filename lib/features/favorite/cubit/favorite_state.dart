@@ -7,6 +7,11 @@ abstract class FavoriteState {}
 class FavoriteInitial extends FavoriteState {}
 
 class FavoriteLoading extends FavoriteState {}
+class FavoriteErrorState extends FavoriteState {
+  final String errorMessage;
+
+  FavoriteErrorState({required this.errorMessage});
+}
 
 class FavoriteLoaded extends FavoriteState {
   final List<ProductModel> allFavorites;

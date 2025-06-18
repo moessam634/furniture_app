@@ -106,9 +106,11 @@ class CustomHorizontalProduct extends StatelessWidget {
                   children: [
                     Row(
                       children: [
-                        Text(title,
-                            style: TextStyles.black16,
-                            overflow: TextOverflow.ellipsis),
+                        Flexible(
+                          child: Text(title,
+                              style: TextStyles.black16,
+                              overflow: TextOverflow.ellipsis),
+                        ),
                         SizedBox(width: 9.w),
                         CustomRatingRow(rate: rate),
                       ],
@@ -117,7 +119,7 @@ class CustomHorizontalProduct extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Expanded(
+                        Flexible(
                           child: Text(
                             price,
                             style: TextStyles.kPrimaryColor16,

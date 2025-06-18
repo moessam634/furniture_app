@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:furniture_app/core/helper/navigation_helper.dart';
 import 'package:furniture_app/core/styles/image_app.dart';
 import 'package:furniture_app/core/utils/storage_helper.dart';
@@ -20,7 +21,7 @@ class _SplashScreenState extends State<SplashScreen> {
     final token = await sl<StorageHelper>().getToken();
     // final userId = await sl<StorageHelper>().getUserId();
     if (mounted) {
-      if (token != null && token.isNotEmpty ) {
+      if (token != null && token.isNotEmpty) {
         NavigationHelper.pushUntil(
           context: context,
           destination: SwitcherScreen(),
@@ -44,8 +45,22 @@ class _SplashScreenState extends State<SplashScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      body: Center(
-        child: Image.asset(ImageApp.splash),
+      body: TweenAnimationBuilder<double>(
+        curve: Curves.easeInOut,
+        tween: Tween(begin: 0.0, end: 1),
+        duration: Duration(seconds: 2),
+        builder: (BuildContext context, value, Widget? child) {
+          return Transform.scale(
+            scale: value,
+            child: Center(
+              child: Image.asset(
+                ImageApp.splash,
+                width: 85.w,
+                height: 85.h,
+              ),
+            ),
+          );
+        },
       ),
     );
   }

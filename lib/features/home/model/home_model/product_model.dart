@@ -1,54 +1,63 @@
-import '../../../../core/styles/constants.dart';
-
 class ProductModel {
-  int? id;
-  String? name;
-  String? description;
-  String? price;
-  String? categoryName;
-  List<String>? images;
+  final int id;
+  final String name;
+  final String price;
+  final int quantity;
+  final List<String> images;
+  final int categoryId;
+  final String description;
 
   ProductModel({
-    this.id,
-    this.name,
-    this.description,
-    this.price,
-    this.categoryName,
-    this.images,
+    required this.id,
+    required this.name,
+    required this.price,
+    required this.quantity,
+    required this.images,
+    required this.categoryId,
+    this.description = '',
   });
-  // factory ProductModel.fromJson(Map<String, dynamic> json) => ProductModel(
-  //       id: json["id"],
-  //       name: json["name"],
-  //       description: json["description"],
-  //       price: json["price"],
-  //       categoryName: json['category_name']?.toString().trim() ?? '',
-  //       images: List<String>.from(json['images'] ?? []),
-  //     );
+
   factory ProductModel.fromJson(Map<String, dynamic> json) {
-    final int productId = json["id"] ?? 0;
-    final List<String> jsonImages = List<String>.from(json['images'] ?? []);
-    final List<String> finalImages = jsonImages.isNotEmpty
-        ? jsonImages
-        : extraImages[productId] ?? [];
     return ProductModel(
-      id: json["id"],
-      name: json["name"],
-      description: json["description"],
-      price: json["price"],
-      categoryName: json['category_name']?.toString().trim() ?? '',
-      images: finalImages,
+      id: json['id'],
+      name: json['name'],
+      price: json['price'],
+      quantity: json['quantity'],
+      images: List<String>.from(json['images']),
+      categoryId: json['categoryId'],
+      description: json['description'] ?? '',
     );
   }
 
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'name': name,
+      'price': price,
+      'quantity': quantity,
+      'images': images,
+      'categoryId': categoryId,
+      'description': description,
+    };
+  }
 
-  Map<String, dynamic> toJson() => {
-        "id": id,
-        "name": name,
-        "description": description,
-        "price": price,
-        "category_name": categoryName,
-        "images": images == null
-            ? []
-            : List<dynamic>.from(images!.map((image) => image)),
-      };
+  ProductModel copyWith({
+    String? id,
+    String? name,
+    String? price,
+    int? quantity,
+    List<String>? images,
+    String? categoryId,
+    String? description,
+  }) {
+    return ProductModel(
+      id:  this.id,
+      name: name ?? this.name,
+      price: price ?? this.price,
+      quantity: quantity ?? this.quantity,
+      images: images ?? this.images,
+      categoryId:  this.categoryId,
+      description: description ?? this.description,
+    );
+  }
 }

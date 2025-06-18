@@ -132,7 +132,7 @@ class _ProductDetailsBodyState extends State<ProductDetailsBody> {
                             onTap: () {
                               setState(() {
                                 selectedImage =
-                                    widget.productModel.images?[index] ?? "";
+                                    widget.productModel.images[index];
                               });
                             },
                             child: Container(
@@ -144,7 +144,7 @@ class _ProductDetailsBodyState extends State<ProductDetailsBody> {
                               ),
                               child: CustomNetworkImage(
                                   image:
-                                      widget.productModel.images?[index] ?? ""),
+                                      widget.productModel.images[index] ),
                             ),
                           ),
                         ),
@@ -159,7 +159,7 @@ class _ProductDetailsBodyState extends State<ProductDetailsBody> {
                           final message = await context
                               .read<CartCubit>()
                               .addToCart(
-                                  productId: widget.productModel.id!,
+                                  productId: widget.productModel.id,
                                   quantity: quantity);
                           customSnackBar(
                               context: context,

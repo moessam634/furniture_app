@@ -1,56 +1,129 @@
 import 'package:bloc/bloc.dart';
-import 'package:furniture_app/features/cart/model/model/cart_products_model.dart';
-import '../model/data/cart_data.dart';
+import 'package:furniture_app/core/utils/local_storage_service.dart';
+import '../../../core/styles/constants.dart';
+import '../../home/model/home_model/product_model.dart';
+import '../model/model/cart_item_model.dart';
 import 'cart_state.dart';
 
 class CartCubit extends Cubit<CartState> {
-  CartCubit(this.cartData) : super(CartInitial());
+  final LocalStorageService _cartService;
 
-  final CartData cartData;
+  CartCubit(this._cartService) : super(CartInitial());
 
-  Future<List<CartProductsModel>> getCartProducts() async {
-    // emit(CartLoading());
+  Future<void> getCartProducts() async {
     try {
-      final cart = await cartData.getCartProducts();
-      emit(CartSuccess(products: cart));
-      return cart;
+      emit(CartLoading());
+      final cartItems = await _cartService.loadCart();
+      emit(CartSuccess(cartItems: cartItems));
     } catch (e) {
-      emit(CartError(errorMessage: e.toString()));
-      rethrow;
-    }
-  }
-  Future<String> addToCart({required int productId, int? quantity}) async {
-    emit(CartLoading());
-    try {
-      final result = await cartData.addToCart(productId: productId, quantity: quantity);
-      emit(AddToCartSuccess(message: result.message));
-      return result.message;
-    } catch (e) {
-      emit(CartError(errorMessage: e.toString()));
-      return 'حدث خطأ أثناء إضافة المنتج';
+      print('Error loading cart: $e');
+      emit(CartError(errorMessage: 'Failed to load cart'));
     }
   }
 
-  Future<String> deleteFromCart({required int cartId}) async {
-    emit(CartLoading());
-    var success = await cartData.deleteFromCart(cartId: cartId);
-    final message = success.message;
-    emit(AddToCartSuccess(message: message));
-    getCartProducts();
-    return message;
+// Updated addToCart method to accept int instead of String
+  Future<String> addToCart({required int productId, int quantity = 1}) async {
+    try {
+      final allProducts = MockData.getProducts();
+      print('Total products available: ${allProducts.length}');
+
+      ProductModel? product;
+
+      // Simplified product finding since we're now using int directly
+      try {
+        product = allProducts.firstWhere((p) => p.id == productId);
+        print('Found product: ${product.name}');
+      } catch (e) {
+        print('Product not found');
+        print('Available product IDs: ${allProducts.map((p) => p.id).toList()}');
+        print('Searching for: $productId');
+        emit(CartError(errorMessage: 'Product not found'));
+        return 'المنتج غير موجود';
+      }
+
+      final cartItem = CartItemModel(
+        id: DateTime.now().millisecondsSinceEpoch,
+        product: product,
+        quantity: quantity,
+      );
+
+      print('Created cart item: ${cartItem.product.name}');
+
+      final success = await _cartService.addToCart(cartItem);
+      print('Add to cart result: $success');
+
+      if (success) {
+        await getCartProducts(); // Refresh cart data
+        return 'تم إضافة المنتج إلى السلة';
+      } else {
+        emit(CartError(errorMessage: 'Failed to add to cart'));
+        return 'فشل في إضافة المنتج';
+      }
+    } catch (e) {
+      print('Error in addToCart: $e');
+      print('Stack trace: ${StackTrace.current}');
+      emit(CartError(errorMessage: 'Failed to add to cart: $e'));
+      return 'فشل في إضافة المنتج: $e';
+    }
   }
 
-  Future<String> updateCartQuantity(
-      {required int productId, required int quantity}) async {
+  // Fixed: Use cart item ID instead of product ID
+  Future<void> deleteFromCart(int cartItemId) async {
     try {
-      await cartData.updateCartQuantity(cartId: productId, quantity: quantity);
-      final updatedProducts = await getCartProducts();
-      emit(CartSuccess(products: updatedProducts));
-      await getCartProducts();
-      return "Added to cart successfully";
+      final success = await _cartService.removeFromCart(cartItemId.toString());
+      if (success) {
+        await getCartProducts(); // Refresh cart data
+      } else {
+        emit(CartError(errorMessage: 'Failed to remove from cart'));
+      }
     } catch (e) {
-      emit(CartError(errorMessage: e.toString()));
-      return "Failed to add to cart: ${e.toString()}";
+      print('Error removing from cart: $e');
+      emit(CartError(errorMessage: 'Failed to remove from cart'));
     }
+  }
+
+  // Fixed: Use cart item ID instead of product ID
+  Future<void> updateCartQuantity(int cartItemId, int quantity) async {
+    try {
+      final success = await _cartService.updateCartItemQuantity(cartItemId.toString(), quantity);
+      if (success) {
+        await getCartProducts(); // Refresh cart data
+      } else {
+        emit(CartError(errorMessage: 'Failed to update quantity'));
+      }
+    } catch (e) {
+      print('Error updating cart quantity: $e');
+      emit(CartError(errorMessage: 'Failed to update quantity'));
+    }
+  }
+
+  Future<void> clearCart() async {
+    try {
+      final success = await _cartService.clearCart();
+      if (success) {
+        await getCartProducts(); // Refresh cart data
+      } else {
+        emit(CartError(errorMessage: 'Failed to clear cart'));
+      }
+    } catch (e) {
+      print('Error clearing cart: $e');
+      emit(CartError(errorMessage: 'Failed to clear cart'));
+    }
+  }
+
+  double getTotalPrice() {
+    if (state is CartSuccess) {
+      final cartItems = (state as CartSuccess).cartItems;
+      return cartItems.fold(0.0, (total, item) => total + item.totalPrice);
+    }
+    return 0.0;
+  }
+
+  int getTotalItems() {
+    if (state is CartSuccess) {
+      final cartItems = (state as CartSuccess).cartItems;
+      return cartItems.fold(0, (total, item) => total + item.quantity);
+    }
+    return 0;
   }
 }

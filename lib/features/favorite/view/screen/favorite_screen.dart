@@ -15,14 +15,14 @@ class FavoriteScreen extends StatelessWidget {
       extendBodyBehindAppBar: true,
       appBar: defaultAppBar(
           context: context,
-          height: 120.h,
+          height: 100.h,
           title: "Favorite",
           style: TextStyles.black24,
           actions: [
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 24.w),
               child: CircleAvatar(),
-            )
+            ),
           ]),
       body: FavoriteBody(),
     );

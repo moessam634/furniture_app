@@ -1,11 +1,10 @@
-import '../../../../core/styles/constants.dart';
 
 class CartProductsModel {
   final int id;
   final int quantity;
   final String name;
   final String price;
-  List<String>? images;
+
 
 
   CartProductsModel({
@@ -13,21 +12,15 @@ class CartProductsModel {
     required this.quantity,
     required this.name,
     required this.price,
-    required this.images,
-
   });
 
   factory CartProductsModel.fromJson(Map<String, dynamic> json) {
-    final int productId = json["id"] ?? 0;
-    final List<String> jsonImages = List<String>.from(json['images'] ?? []);
-    final List<String> finalImages = jsonImages.isNotEmpty
-        ? jsonImages
-        : extraImages[productId] ?? [];
+
     return CartProductsModel(
-      id: json['id'],
+      id: json['id'] ?? 0,
       quantity: json['quantity'],
       name: json['name'],
-      price: json['price'], images: finalImages,
+      price: json['price'],
     );
   }
   Map<String, dynamic> toJson() {
@@ -36,6 +29,7 @@ class CartProductsModel {
       'quantity': quantity,
       'name': name,
       'price': price,
+
     };
   }
 }

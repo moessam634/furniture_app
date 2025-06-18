@@ -16,11 +16,8 @@ class ProductDetailsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: BlocProvider(
-        create: (context) => CartCubit(sl()),
-        child: ProductDetailsBody(
-          productModel: productModel,
-        ),
+      body: ProductDetailsBody(
+        productModel: productModel,
       ),
     );
   }

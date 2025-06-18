@@ -1,4 +1,4 @@
-import '../model/model/cart_products_model.dart';
+import '../model/model/cart_item_model.dart';
 
 sealed class CartState {}
 
@@ -13,9 +13,9 @@ final class AddToCartSuccess extends CartState {
 }
 
 final class CartSuccess extends CartState {
-  List<CartProductsModel> products;
+  final List<CartItemModel> cartItems;
 
-  CartSuccess({required this.products});
+  CartSuccess({required this.cartItems});
 }
 
 final class CartError extends CartState {

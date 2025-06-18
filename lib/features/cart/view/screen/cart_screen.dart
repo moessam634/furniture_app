@@ -4,10 +4,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:furniture_app/core/styles/text_styles.dart';
 import 'package:furniture_app/core/widgets/custom_app_bar.dart';
 import 'package:furniture_app/features/cart/cubit/cart_cubit.dart';
-import 'package:furniture_app/features/cart/model/data/cart_data.dart';
-import 'package:furniture_app/features/check_out/cubit/pay_mob__cubit.dart';
-import 'package:furniture_app/features/check_out/cubit/payment_cubit.dart';
 import '../../../../core/utils/service_locator.dart';
+import '../../cubit/pay_mob_cubit/pay_mob__cubit.dart';
 import '../widget/cart_body.dart';
 
 class CartScreen extends StatelessWidget {
@@ -38,7 +36,6 @@ class CartScreen extends StatelessWidget {
       body: MultiBlocProvider(
         providers: [
           BlocProvider(create: (context) => sl<CartCubit>()),
-          BlocProvider(create: (context) => sl<PaymentCubit>()),
           BlocProvider(create: (context) => sl<PayMobCubit>()),
         ],
         child: CartBody(),

@@ -15,7 +15,7 @@ class CustomNetworkImage extends StatelessWidget {
       fit: BoxFit.cover,
       progressIndicatorBuilder: (context, url, downloadProgress) =>
           SpinKitFadingCircle(color: ColorsApp.kPrimaryColor, size: 25),
-      errorWidget: (context, url, error) => Icon(Icons.error),
+      errorWidget: (context, url, error) => Icon(Icons.not_interested),
     );
   }
 }

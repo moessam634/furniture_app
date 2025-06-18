@@ -28,6 +28,8 @@ class ImageApp {
   static const String homeIcon = "${imagePath}home_icon.svg";
   static const String truckIcon = "${imagePath}truck-fast-outline.svg";
   static const String userIcon = "${imagePath}user_icon.svg";
+  static const String personImage = "${imagePath}person.png";
+  static const String personaImage = "${imagePath}persona.jpg";
   static const String ellipseIcon = "${imagePath}Ellipse 43.png";
   static const String arrowBackIcon = "${imagePath}arrowBack.svg";
   static const String arrowForwardIcon = "${imagePath}forwardArrow.svg";

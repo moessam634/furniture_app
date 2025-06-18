@@ -6,23 +6,20 @@ import 'package:furniture_app/core/helper/navigation_helper.dart';
 import 'package:furniture_app/core/styles/colors_app.dart';
 import 'package:furniture_app/core/styles/image_app.dart';
 import 'package:furniture_app/core/styles/string_app.dart';
-import 'package:furniture_app/core/utils/storage_helper.dart';
 import 'package:furniture_app/core/widgets/custom_snack_bar.dart';
 import 'package:furniture_app/features/cart/cubit/cart_cubit.dart';
-import 'package:furniture_app/features/cart/model/model/cart_products_model.dart';
 import 'package:furniture_app/features/favorite/cubit/favorite_cubit.dart';
 import 'package:furniture_app/features/favorite/cubit/favorite_state.dart';
 import 'package:furniture_app/features/home/home_cubit/categories_cubit/categories_cubit.dart';
 import 'package:furniture_app/features/home/home_cubit/products_cubit/product_cubit.dart';
 import 'package:furniture_app/features/home/home_cubit/products_cubit/product_state.dart';
+import 'package:furniture_app/features/home/view/screen/all_products_screen.dart';
 import 'package:furniture_app/features/home/view/widget/custom_category_item.dart';
 import 'package:furniture_app/features/home/view/widget/custom_product_card.dart';
 import 'package:furniture_app/features/product_details/view/screen/product_details_screen.dart';
 import '../../../../core/styles/text_styles.dart';
-import '../../../../core/utils/service_locator.dart';
 import '../../../../core/widgets/custom_search_container.dart';
 import '../../../search/view/screen/search_screen.dart';
-import '../../../see_all/view/screen/see_all_screen.dart';
 import '../../home_cubit/categories_cubit/categories_state.dart';
 import 'custom_offers_container.dart';
 import 'custom_row_text.dart';
@@ -37,12 +34,23 @@ class HomeBody extends StatefulWidget {
 class _HomeBodyState extends State<HomeBody> {
   String selectedCategory = "الكل";
 
+  void _initialize() async {
+    // Load categories and products
+    context.read<CategoriesCubit>().getCategories();
+    context.read<ProductsCubit>().getProducts();
+  }
+
   @override
   void initState() {
     super.initState();
-    context.read<CategoriesCubit>().getCategories();
-    context.read<ProductsCubit>().getProduct();
-    context.read<FavoriteCubit>().loadFavorites();
+    _initialize();
+  }
+
+  String _getCategoryDisplayText() {
+    if (selectedCategory == "الكل" || selectedCategory == "All") {
+      return "جميع المنتجات";
+    }
+    return selectedCategory;
   }
 
   @override
@@ -56,149 +64,213 @@ class _HomeBodyState extends State<HomeBody> {
             child: Row(
               children: [
                 InkWell(
-                  child:
-                  Icon(CupertinoIcons.bell, color: ColorsApp.kPrimaryColor),
+                  child: Icon(CupertinoIcons.bell, color: ColorsApp.kPrimaryColor),
                 ),
                 SizedBox(width: 8.w),
                 Expanded(
                   child: CustomSearchContainer(
                       onTap: () {
                         NavigationHelper.push(
-                            context: context, destination: SearchScreen());
+                            context: context,
+                            destination: SearchScreen()
+                        );
                       },
-                      icon: CupertinoIcons.camera),
+                      icon: CupertinoIcons.camera
+                  ),
                 ),
               ],
             ),
           ),
           SizedBox(height: 25.h),
           CustomOffersContainer(
-              discountImage: ImageApp.off30, productImage: ImageApp.chair),
+              discountImage: ImageApp.off30,
+              productImage: ImageApp.chair
+          ),
           SizedBox(height: 30.h),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 24.w),
-            child: CustomRowText(
-              text: StringApp.categories,
-              textButton: StringApp.seeAll,
-              onPressed: () {},
-            ),
+            child: CustomRowText(text: StringApp.categories),
           ),
+
+          // Categories Section
           BlocBuilder<CategoriesCubit, CategoriesState>(
             builder: (context, state) {
               if (state is CategoriesSuccessState) {
                 final categories = state.data.categories;
-                {
-                  return SizedBox(
-                    height: 40.h,
-                    child: ListView.separated(
-                      scrollDirection: Axis.horizontal,
-                      padding: EdgeInsets.symmetric(horizontal: 24.w),
-                      itemCount: categories.length,
-                      separatorBuilder: (_, __) => SizedBox(width: 8.w),
-                      itemBuilder: (context, index) {
-                        final category = categories[index];
-                        return CustomCategoryItem(
-                          name: category.name,
-                          isSelected:
-                          selectedCategory.trim() == category.name.trim(),
-                          onTap: () {
-                            setState(() {
-                              selectedCategory = category.name;
-                            });
+                return SizedBox(
+                  height: 40.h,
+                  child: ListView.separated(
+                    scrollDirection: Axis.horizontal,
+                    padding: EdgeInsets.symmetric(horizontal: 24.w),
+                    itemCount: categories.length,
+                    separatorBuilder: (_, __) => SizedBox(width: 8.w),
+                    itemBuilder: (context, index) {
+                      final category = categories[index];
+                      final isSelected = selectedCategory.trim() == category.name.trim();
 
-                            if (category.name.trim() == "الكل" ||
-                                category.name.trim() == "All") {
-                              context.read<ProductsCubit>().resetFilter();
-                            } else {
-                              context
-                                  .read<ProductsCubit>()
-                                  .filterByCategory(category.name.trim());
-                            }
-                          },
-                        );
-                      },
-                    ),
-                  );
-                }
+                      return CustomCategoryItem(
+                        name: category.name,
+                        isSelected: isSelected,
+                        onTap: () {
+                          setState(() {
+                            selectedCategory = category.name;
+                          });
+                          // Filter products based on selected category
+                          if (category.name.trim() == "الكل" || category.name.trim() == "All") {
+                            context.read<ProductsCubit>().resetFilter();
+                          } else {
+                            context.read<ProductsCubit>().filterByCategory(category.name.trim());
+                          }
+                        },
+                      );
+                    },
+                  ),
+                );
+              } else if (state is CategoriesErrorState) {
+                return Center(
+                  child: Text(
+                    'Failed to load categories',
+                    style: TextStyles.kPrimaryColor18,
+                  ),
+                );
               } else {
                 return Center(child: CircularProgressIndicator());
               }
             },
           ),
+
           SizedBox(height: 30.h),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 24.w),
             child: CustomRowText(
-                text: StringApp.sofa, textButton: StringApp.seeAll),
+              text: _getCategoryDisplayText(), // Dynamic text based on selected category
+              textButton: StringApp.seeAll,
+              onPressed: () {
+                NavigationHelper.push(
+                    context: context,
+                    destination: AllProductsScreen()
+                );
+              },
+            ),
           ),
           SizedBox(height: 15.h),
+
+          // Products Section
           BlocBuilder<ProductsCubit, ProductState>(
             builder: (context, state) {
               if (state is ProductSuccessState) {
+                final products = state.products;
 
-                final product = state.products;
-                if (product.isEmpty) {
-                  return Center(
-                      child:
-                      Text("No Products", style: TextStyles.kPrimaryColor18)
-                  );
-                } else {
-                  return Padding(
-                    padding: EdgeInsets.only(left: 24.w),
-                    child: SizedBox(
-                      height: 204.h,
-                      child: ListView.separated(
-                        itemCount: product.length,
-                        scrollDirection: Axis.horizontal,
-                        itemBuilder: (context, index) {
-                          return BlocBuilder<FavoriteCubit, FavoriteState>(
-                            builder: (context, state) {
-                              print(product[index].id);
-                              return CustomProductCard(
-                                image: (product[index].images != null &&
-                                    product[index].images!.isNotEmpty)
-                                    ? product[index].images!.first
-                                    : ImageApp.sofa,
-                                title: product[index].name ?? "",
-                                price: double.parse(product[index].price ?? '0')
-                                    .toString(),
-                                isFavorite: context
-                                    .read<FavoriteCubit>()
-                                    .isFavorite(product[index].id!),
-                                onIconPressed: () {
-                                    context
-                                        .read<FavoriteCubit>()
-                                        .toggleFavorite(product[index]);
-                                },
-                                onTap: () {
-                                  NavigationHelper.push(
-                                    context: context,
-                                    destination: ProductDetailsScreen(
-                                        productModel: product[index]),
-                                  );
-                                },
-                                onPressed: () async {
-                                  final message = await context
-                                      .read<CartCubit>()
-                                      .addToCart(productId: product[index].id!);
-                                  customSnackBar(
-                                      context: context,
-                                      text: message,
-                                      backgroundColor: Colors.green);
-                                },
-                              );
-                            },
-                          );
-                        },
-                        separatorBuilder: (BuildContext context, int index) {
-                          return Padding(padding: EdgeInsets.only(right: 14.w));
-                        },
+                if (products.isEmpty) {
+                  return SizedBox(
+                    height: 204.h,
+                    child: Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.inbox_outlined,
+                            size: 48,
+                            color: Colors.grey,
+                          ),
+                          SizedBox(height: 8),
+                          Text(
+                            selectedCategory == "الكل"
+                                ? "لا توجد منتجات"
+                                : "لا توجد منتجات في فئة $selectedCategory",
+                            style: TextStyles.kPrimaryColor18,
+                            textAlign: TextAlign.center,
+                          ),
+                        ],
                       ),
                     ),
                   );
                 }
+                return Padding(
+                  padding: EdgeInsets.only(left: 24.w),
+                  child: SizedBox(
+                    height: 204.h,
+                    child: ListView.separated(
+                      itemCount: products.length,
+                      scrollDirection: Axis.horizontal,
+                      itemBuilder: (context, index) {
+                        final product = products[index];
+
+                        return BlocBuilder<FavoriteCubit, FavoriteState>(
+                          builder: (context, favoriteState) {
+                            return CustomProductCard(
+                              image: product.images.isNotEmpty
+                                  ? product.images.first
+                                  : '', // Handle empty images
+                              title: product.name,
+                              price: double.tryParse(product.price)?.toString() ?? product.price,
+                              isFavorite: context
+                                  .read<FavoriteCubit>()
+                                  .isFavorite(product.id),
+                              onIconPressed: () {
+                                context
+                                    .read<FavoriteCubit>()
+                                    .toggleFavorite(product);
+                              },
+                              onTap: () {
+                                NavigationHelper.push(
+                                  context: context,
+                                  destination: ProductDetailsScreen(
+                                      productModel: product
+                                  ),
+                                );
+                              },
+                              onPressed: () async {
+                                final message = await context
+                                    .read<CartCubit>()
+                                    .addToCart(productId: product.id);
+
+                                // Show result
+                                customSnackBar(
+                                    context: context,
+                                    text: message,
+                                    backgroundColor: message.contains('تم')
+                                        ? Colors.green
+                                        : Colors.red
+                                );
+                              },
+                            );
+                          },
+                        );
+                      },
+                      separatorBuilder: (BuildContext context, int index) {
+                        return SizedBox(width: 14.w);
+                      },
+                    ),
+                  ),
+                );
+              } else if (state is ProductFailureState) {
+                return Container(
+                  height: 204.h,
+                  child: Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(
+                          Icons.error_outline,
+                          size: 48,
+                          color: Colors.red,
+                        ),
+                        SizedBox(height: 8),
+                        Text(
+                          state.errorMessage,
+                          style: TextStyles.kPrimaryColor18,
+                          textAlign: TextAlign.center,
+                        ),
+                      ],
+                    ),
+                  ),
+                );
               } else {
-                return Center(child: CircularProgressIndicator());
+                return SizedBox(
+                  height: 204.h,
+                  child: Center(child: CircularProgressIndicator()),
+                );
               }
             },
           ),

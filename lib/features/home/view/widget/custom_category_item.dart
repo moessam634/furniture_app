@@ -20,9 +20,7 @@ class CustomCategoryItem extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        padding: EdgeInsets.symmetric(
-          horizontal: 16.w,
-        ),
+        padding: EdgeInsets.symmetric(horizontal: 16.w),
         alignment: Alignment.center,
         decoration: BoxDecoration(
           color: isSelected ? ColorsApp.kPrimaryColor : Colors.white,

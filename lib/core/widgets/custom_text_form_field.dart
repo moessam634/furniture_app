@@ -67,7 +67,7 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-      textDirection: TextDirection.rtl,
+      textDirection: TextDirection.ltr,
       controller: widget.controller,
       validator: widget.validator,
       autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -77,9 +77,9 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
       onChanged:widget.onChanged ,
       decoration: InputDecoration(
         isDense: true,
-        hintText: widget.hintText,
+        labelText: widget.hintText,
         contentPadding: EdgeInsets.all(10.h),
-        hintStyle: widget.hintStyle ?? TextStyles.black16,
+        labelStyle: widget.hintStyle ?? TextStyles.black14,
         prefixIcon: widget.prefixIcon,
         suffixIcon: widget.suffixIcon,
         fillColor: _focusNode.hasFocus

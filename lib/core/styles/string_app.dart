@@ -29,7 +29,7 @@ class StringApp {
   static const String signUp = "Sign up";
   static const String fullName = "Full name";
   static const String verify = "Verify";
-  static const String categories = "Categories";
+  static const String categories = "Categories    ";
   static const String search = "Search";
   static const String seeAll = "See all";
   static const String all = "All";
