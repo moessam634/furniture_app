@@ -8,6 +8,8 @@ import 'package:furniture_app/core/validation/auth_validation.dart';
 import '../../../../../core/styles/image_app.dart';
 import '../../../../../core/styles/string_app.dart';
 import '../../../../../core/styles/text_styles.dart';
+import '../../../../../core/utils/service_locator.dart';
+import '../../../../../core/utils/storage_helper.dart';
 import '../../../../../core/widgets/custom_alert_dialog.dart';
 import '../../../../../core/widgets/custom_button.dart';
 import '../../../../../core/widgets/custom_column_image_text.dart';
@@ -54,6 +56,8 @@ class _RegisterBodyState extends State<RegisterBody> {
         child: BlocConsumer<RegisterCubit, RegisterState>(
           listener: (context, state) {
             if (state is RegisterSuccess) {
+              sl<StorageHelper>().saveUserName(nameController.text);
+              sl<StorageHelper>().saveUserEmail(emailController.text);
               showDialog(
                 context: context,
                 builder: (context) => CustomAlertDialog(
@@ -179,9 +183,7 @@ class _RegisterBodyState extends State<RegisterBody> {
                               }
                             },
                           ),
-                    SizedBox(
-                      height: 20.h,
-                    ),
+                    SizedBox(height: 20.h),
                     CustomDividerWidget(
                       text: StringApp.or,
                       style: TextStyles.black16,

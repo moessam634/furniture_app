@@ -3,6 +3,7 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:furniture_app/core/helper/navigation_helper.dart';
 import 'package:furniture_app/core/styles/image_app.dart';
 import 'package:furniture_app/core/widgets/custom_button.dart';
 import 'package:furniture_app/core/widgets/custom_counter_container.dart';
@@ -10,6 +11,7 @@ import 'package:furniture_app/core/widgets/custom_horizontal_product.dart';
 import 'package:furniture_app/core/widgets/custom_snack_bar.dart';
 import 'package:furniture_app/features/cart/cubit/cart_state.dart';
 import 'package:furniture_app/features/cart/view/widget/custom_total_price.dart';
+import 'package:furniture_app/features/product_details/view/screen/product_details_screen.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../../../../core/styles/colors_app.dart';
 import '../../../../core/styles/text_styles.dart';
@@ -68,7 +70,7 @@ class _CartBodyState extends State<CartBody> {
               if (state.cartItems.isEmpty) {
                 return Center(
                   child: Text(
-                    "No Products in the cart",
+                    "لا يوجد منتجات في السلة",
                     style: TextStyles.kPrimaryColor18,
                   ),
                 );
@@ -79,24 +81,32 @@ class _CartBodyState extends State<CartBody> {
                   padding: EdgeInsets.only(bottom: 295.h),
                   separatorBuilder: (context, index) => SizedBox(height: 14.h),
                   itemBuilder: (context, index) {
-                    final cartItem = state.cartItems[index]; // Better naming
+                    final cartItem = state.cartItems[index];
                     final isFav = context
                         .read<FavoriteCubit>()
-                        .isFavorite(cartItem.product.id); // Use product ID for favorites
+                        .isFavorite(cartItem.product.id);
                     return Padding(
                       padding: EdgeInsets.symmetric(horizontal: 24.w),
                       child: CustomHorizontalProduct(
                         isFavorite: isFav,
-                        onTap: () {},
+                        onTap: () {
+                          NavigationHelper.push(
+                              context: context,
+                              destination: ProductDetailsScreen(
+                                  productModel: cartItem.product));
+                        },
+                        onIconPressed: () {
+                          context
+                              .read<FavoriteCubit>()
+                              .toggleFavorite(cartItem.product);
+                          setState(() {});
+                        },
                         title: cartItem.product.name,
                         price: double.parse(cartItem.product.price).toString(),
                         image: cartItem.product.images.first,
                         rate: "4.5",
                         onPressed: (_) {
-                          // Fixed: Use cart item ID for deletion
-                          context
-                              .read<CartCubit>()
-                              .deleteFromCart(cartItem.id);
+                          context.read<CartCubit>().deleteFromCart(cartItem.id);
                         },
                         addProductIcon: CustomCounterContainer(
                           width: 56.w,
@@ -107,19 +117,14 @@ class _CartBodyState extends State<CartBody> {
                           iconSize: 12.sp,
                           text: cartItem.quantity.toString(),
                           onPressedPlus: () {
-                            // Fixed: Use cart item ID for quantity update
                             context.read<CartCubit>().updateCartQuantity(
-                                cartItem.id,
-                                cartItem.quantity + 1);
+                                cartItem.id, cartItem.quantity + 1);
                           },
                           onPressedMinus: () {
                             if (cartItem.quantity > 1) {
-                              // Fixed: Use cart item ID for quantity update
                               context.read<CartCubit>().updateCartQuantity(
-                                  cartItem.id,
-                                  cartItem.quantity - 1);
+                                  cartItem.id, cartItem.quantity - 1);
                             } else {
-                              // Fixed: Use cart item ID for deletion
                               context
                                   .read<CartCubit>()
                                   .deleteFromCart(cartItem.id);
@@ -154,7 +159,9 @@ class _CartBodyState extends State<CartBody> {
                 double totalPrice = state.cartItems.fold(
                     0,
                         (sum, product) =>
-                    sum + (double.parse(product.product.price) * product.quantity));
+                    sum +
+                        (double.parse(product.product.price) *
+                            product.quantity));
                 int totalItems = state.cartItems
                     .fold(0, (sum, product) => sum + (product.quantity));
 

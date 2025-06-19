@@ -58,33 +58,38 @@ class _HomeBodyState extends State<HomeBody> {
     return SingleChildScrollView(
       child: Column(
         children: [
-          SizedBox(height: 20.h),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 24.w),
-            child: Row(
-              children: [
-                InkWell(
-                  child: Icon(CupertinoIcons.bell, color: ColorsApp.kPrimaryColor),
-                ),
-                SizedBox(width: 8.w),
-                Expanded(
-                  child: CustomSearchContainer(
-                      onTap: () {
-                        NavigationHelper.push(
-                            context: context,
-                            destination: SearchScreen()
-                        );
-                      },
-                      icon: CupertinoIcons.camera
-                  ),
-                ),
-              ],
-            ),
-          ),
+          // SizedBox(height: 20.h),
+          // Padding(
+          //   padding: EdgeInsets.symmetric(horizontal: 24.w),
+          //   child: Row(
+          //     children: [
+          //       InkWell(
+          //         child: Icon(CupertinoIcons.bell, color: ColorsApp.kPrimaryColor),
+          //       ),
+          //       SizedBox(width: 8.w),
+          //       // Expanded(
+          //       //   child: CustomSearchContainer(
+          //       //       onTap: () {
+          //       //         NavigationHelper.push(
+          //       //             context: context,
+          //       //             destination: SearchScreen()
+          //       //         );
+          //       //       },
+          //       //       icon: CupertinoIcons.camera
+          //       //   ),
+          //       // ),
+          //     ],
+          //   ),
+          // ),
           SizedBox(height: 25.h),
           CustomOffersContainer(
+              onTap: () {
+                NavigationHelper.push(
+                    context: context, destination: AllProductsScreen());
+              },
               discountImage: ImageApp.off30,
               productImage: ImageApp.chair
+
           ),
           SizedBox(height: 30.h),
           Padding(
@@ -105,9 +110,11 @@ class _HomeBodyState extends State<HomeBody> {
                     itemCount: categories.length,
                     separatorBuilder: (_, __) => SizedBox(width: 8.w),
                     itemBuilder: (context, index) {
+                      print(selectedCategory);
                       final category = categories[index];
-                      final isSelected = selectedCategory.trim() == category.name.trim();
-
+                      final isSelected = selectedCategory.trim() ==
+                          category.name.trim();
+                      print("$isSelected");
                       return CustomCategoryItem(
                         name: category.name,
                         isSelected: isSelected,
@@ -115,11 +122,12 @@ class _HomeBodyState extends State<HomeBody> {
                           setState(() {
                             selectedCategory = category.name;
                           });
-                          // Filter products based on selected category
-                          if (category.name.trim() == "الكل" || category.name.trim() == "All") {
+                          if (category.name.trim() == "الكل" ||
+                              category.name.trim() == "All") {
                             context.read<ProductsCubit>().resetFilter();
                           } else {
-                            context.read<ProductsCubit>().filterByCategory(category.name.trim());
+                            context.read<ProductsCubit>().filterByCategory(
+                                category.name.trim());
                           }
                         },
                       );
@@ -143,7 +151,7 @@ class _HomeBodyState extends State<HomeBody> {
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 24.w),
             child: CustomRowText(
-              text: _getCategoryDisplayText(), // Dynamic text based on selected category
+              text: _getCategoryDisplayText(),
               textButton: StringApp.seeAll,
               onPressed: () {
                 NavigationHelper.push(
@@ -201,9 +209,12 @@ class _HomeBodyState extends State<HomeBody> {
                             return CustomProductCard(
                               image: product.images.isNotEmpty
                                   ? product.images.first
-                                  : '', // Handle empty images
+                                  : '',
+                              // Handle empty images
                               title: product.name,
-                              price: double.tryParse(product.price)?.toString() ?? product.price,
+                              price: double
+                                  .tryParse(product.price)
+                                  ?.toString() ?? product.price,
                               isFavorite: context
                                   .read<FavoriteCubit>()
                                   .isFavorite(product.id),

@@ -18,7 +18,8 @@ class CustomTextFormField extends StatefulWidget {
     this.radius,
     this.focusNode,
     this.focusedFillColor,
-    this.hintStyle, this.onChanged,
+    this.hintStyle,
+    this.onChanged,
   });
 
   final TextEditingController? controller;
@@ -74,12 +75,12 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
       keyboardType: widget.keyboardType,
       obscureText: widget.obscureText,
       focusNode: _focusNode,
-      onChanged:widget.onChanged ,
+      onChanged: widget.onChanged,
       decoration: InputDecoration(
         isDense: true,
-        labelText: widget.hintText,
-        contentPadding: EdgeInsets.all(10.h),
-        labelStyle: widget.hintStyle ?? TextStyles.black14,
+        hintText: widget.hintText,
+        contentPadding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
+        hintStyle: widget.hintStyle ?? TextStyles.black14,
         prefixIcon: widget.prefixIcon,
         suffixIcon: widget.suffixIcon,
         fillColor: _focusNode.hasFocus
@@ -87,13 +88,19 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
             : widget.fillColor ?? ColorsApp.kBackGroundColor,
         filled: true,
         errorBorder: textFormFieldBorder(
-            radius: widget.radius ?? 16.r, color: Colors.red),
+            radius: widget.radius ?? 16.r,
+            borderSide: BorderSide(color: Colors.red)),
         focusedErrorBorder: textFormFieldBorder(
-            radius: widget.radius ?? 16.r, color: Colors.red),
+            radius: widget.radius ?? 16.r,
+            borderSide: BorderSide(color: Colors.red)),
         enabledBorder: textFormFieldBorder(
-            radius: widget.radius ?? 16.r, color: ColorsApp.kLightTextColor),
+          radius: widget.radius ?? 16.r,
+          borderSide: BorderSide.none,
+        ),
         focusedBorder: textFormFieldBorder(
-            radius: widget.radius ?? 16.r, color: ColorsApp.kLightTextColor),
+          radius: widget.radius ?? 16.r,
+          borderSide: BorderSide.none,
+        ),
       ),
     );
   }

@@ -12,8 +12,35 @@ import '../../../../core/utils/service_locator.dart';
 import '../../../../core/utils/storage_helper.dart';
 import 'custom_log_out_dialog.dart';
 
-class ProfileBody extends StatelessWidget {
+
+class ProfileBody extends StatefulWidget {
   const ProfileBody({super.key});
+
+  @override
+  State<ProfileBody> createState() => _ProfileBodyState();
+}
+
+class _ProfileBodyState extends State<ProfileBody> {
+
+  String? userName;
+
+  String? userEmail;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadUserInfo();
+  }
+
+  void _loadUserInfo() async {
+     userName = await sl<StorageHelper>().getUserName();
+     userEmail = await sl<StorageHelper>().getUserEmail();
+    setState(() {
+      userName = userName;
+      userEmail = userEmail;
+    });
+  }
+
 
   Future<void> logout({required BuildContext context}) async {
     await sl<StorageHelper>().removeToken();
@@ -57,11 +84,11 @@ class ProfileBody extends StatelessWidget {
                   ),
                 ),
                 title: Text(
-                  "Omar Ali",
+                  userName ?? "example",
                   style: TextStyles.black22,
                 ),
                 subtitle: Text(
-                  "OmarAli2000@gmail.com",
+                userEmail ?? "example",
                   style: TextStyles.black14,
                 ),
                 trailing: IconButton(

@@ -12,10 +12,7 @@ class ProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: BlocProvider(
-        create: (context) => LoginCubit(sl()),
-        child: ProfileBody(),
-      ),
+      body: ProfileBody(),
     );
   }
 }

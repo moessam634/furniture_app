@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import '../../../../core/styles/colors_app.dart';
 import '../../../../core/styles/image_app.dart';
 import '../../../../core/widgets/custom_favorite_icon.dart';
 
@@ -19,14 +20,16 @@ class ProductDetailsAppBar extends StatelessWidget {
           children: [
             IconButton(
               onPressed: () => Navigator.pop(context),
-              icon: Icon(Icons.arrow_back_ios),
+              icon: Icon(
+                Icons.arrow_back_ios,
+                color: ColorsApp.kLightTextColor,
+              ),
             ),
             CustomFavoriteIcon(
-              width: 50.w,
-              height: 50.h,
+              width: 44.w,
+              height:44.h,
               icon: icon,
               onPressed: onPressed,
-              // isFavorite: true,
             ),
           ],
         ),

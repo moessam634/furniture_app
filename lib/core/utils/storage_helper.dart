@@ -17,6 +17,22 @@ class StorageHelper {
     await storage.delete(key: "token");
   }
 
+  Future saveUserName(String value) async {
+    await storage.write(key: "name", value: value);
+  }
+
+  Future<String?> getUserName() async {
+    return await storage.read(key: "name") ?? "";
+  }
+
+  Future saveUserEmail(String value) async {
+    await storage.write(key: "email", value: value);
+  }
+
+  Future<String?> getUserEmail() async {
+    return await storage.read(key: "email") ?? "";
+  }
+
   Future saveUserId(String value) async {
     await storage.write(key: "id", value: value);
   }

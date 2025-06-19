@@ -105,11 +105,15 @@ class CustomHorizontalProduct extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Row(
+                      textDirection: TextDirection.rtl,
                       children: [
                         Flexible(
-                          child: Text(title,
-                              style: TextStyles.black16,
-                              overflow: TextOverflow.ellipsis),
+                          child: Text(
+                            title,
+                            style: TextStyles.black16,
+                            overflow: TextOverflow.ellipsis,
+                            textDirection: TextDirection.rtl,
+                          ),
                         ),
                         SizedBox(width: 9.w),
                         CustomRatingRow(rate: rate),
@@ -121,14 +125,13 @@ class CustomHorizontalProduct extends StatelessWidget {
                       children: [
                         Flexible(
                           child: Text(
-                            price,
+                            "رس${double.parse(price).toStringAsFixed(1)}",
                             style: TextStyles.kPrimaryColor16,
                             overflow: TextOverflow.ellipsis,
                             maxLines: 1,
                           ),
                         ),
-                        const Spacer(),
-                        Expanded(child: addProductIcon),
+                        Flexible(child: addProductIcon),
                       ],
                     ),
                     SizedBox(height: 24.h),

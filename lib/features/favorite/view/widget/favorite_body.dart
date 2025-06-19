@@ -47,135 +47,130 @@ class _FavoriteBodyState extends State<FavoriteBody> {
         padding: EdgeInsets.symmetric(horizontal: 24.w),
         child: BlocBuilder<FavoriteCubit, FavoriteState>(
             builder: (context, state) {
-              if (state is FavoriteLoading) {
-                return const Center(child: CircularProgressIndicator());
-              } else if (state is FavoriteLoaded) {
-                final filtered = state.filteredFavorites;
-                final query = state.searchQuery;
-                return Column(
-                  children: [
-                    CustomTextFormField(
-                      controller: _searchController,
-                      hintText: "بحث",
-                      onChanged: (query) {
-                        context.read<FavoriteCubit>().searchFavorites(query);
-                      },
-                      hintStyle: TextStyles.black16.copyWith(
-                        color: ColorsApp.kLightTextColor,
-                        fontWeight: FontWeight.w400,
-                      ),
-                      radius: 8.r,
-                      fillColor: Colors.white,
-                      focusedFillColor: Colors.blueGrey.shade50,
-                      keyboardType: TextInputType.text,
-                      prefixIcon:
+          if (state is FavoriteLoading) {
+            return const Center(child: CircularProgressIndicator());
+          } else if (state is FavoriteLoaded) {
+            final filtered = state.filteredFavorites;
+            final query = state.searchQuery;
+            return Column(
+              children: [
+                CustomTextFormField(
+                  controller: _searchController,
+                  hintText: "بحث",
+                  onChanged: (query) {
+                    context.read<FavoriteCubit>().searchFavorites(query);
+                  },
+                  hintStyle: TextStyles.black16.copyWith(
+                    color: ColorsApp.kLightTextColor,
+                    fontWeight: FontWeight.w400,
+                  ),
+                  radius: 8.r,
+                  keyboardType: TextInputType.text,
+                  prefixIcon:
                       Icon(Icons.search, color: ColorsApp.kLightTextColor),
-                    ),
-                    SizedBox(height: 25.h),
-                    Expanded(
-                      child: filtered.isEmpty
-                          ? Center(
-                        child: Text(
-                          query.isNotEmpty
-                              ? "هذا المنتج غير موجود فى المفضله"
-                              : "لا توجد عناصر مفضلة",
-                          style: TextStyles.black22
-                              .copyWith(color: ColorsApp.kPrimaryColor),
-                        ),
-                      )
-                          : ListView.separated(
-                        itemCount: filtered.length,
-                        separatorBuilder: (_, __) => SizedBox(height: 14.h),
-                        itemBuilder: (context, index) {
-                          final item = filtered[index];
-                          final isFav = context
-                              .read<FavoriteCubit>()
-                              .isFavorite(item.id);
-                          return CustomHorizontalProduct(
-                            isFavorite: isFav,
-                            onIconPressed: () {
-                              context
-                                  .read<FavoriteCubit>()
-                                  .toggleFavorite(item);
-                              setState(() {});
-                            },
-                            addProductIcon: Padding(
-                              padding: EdgeInsets.only(left: 24.w),
-                              child: CustomPlusIcon(
-                                onTap: () async {
-                                  // Use the cubit's method for consistency
-                                  final success = await context
-                                      .read<FavoriteCubit>()
-                                      .addFavoriteToCart(item);
-
-                                  if (success) {
-                                    customSnackBar(
-                                        context: context,
-                                        text: "تمت الإضافة إلى السلة",
-                                        backgroundColor: Colors.green);
-                                    context
+                ),
+                SizedBox(height: 14.h),
+                Flexible(
+                  child: filtered.isEmpty
+                      ? Center(
+                          child: Text(
+                            query.isNotEmpty
+                                ? "هذا المنتج غير موجود فى المفضله"
+                                : "لا توجد عناصر مفضلة",
+                            style: TextStyles.black22
+                                .copyWith(color: ColorsApp.kPrimaryColor),
+                          ),
+                        )
+                      : ListView.separated(
+                          itemCount: filtered.length,
+                          separatorBuilder: (_, __) => SizedBox(height: 14.h),
+                          itemBuilder: (context, index) {
+                            final item = filtered[index];
+                            final isFav = context
+                                .read<FavoriteCubit>()
+                                .isFavorite(item.id);
+                            return CustomHorizontalProduct(
+                              isFavorite: isFav,
+                              onIconPressed: () {
+                                context
+                                    .read<FavoriteCubit>()
+                                    .toggleFavorite(item);
+                                setState(() {});
+                              },
+                              addProductIcon: Padding(
+                                padding: EdgeInsets.only(left: 24.w),
+                                child: CustomPlusIcon(
+                                  onTap: () async {
+                                    final success = await context
                                         .read<FavoriteCubit>()
-                                        .toggleFavorite(item);
-                                  } else {
-                                    customSnackBar(
-                                        context: context,
-                                        text: "فشل في إضافة المنتج إلى السلة",
-                                        backgroundColor: Colors.red);
-                                  }
-                                },
+                                        .addFavoriteToCart(item);
+
+                                    if (success) {
+                                      customSnackBar(
+                                          context: context,
+                                          text: "تمت الإضافة إلى السلة",
+                                          backgroundColor: Colors.green);
+                                      context
+                                          .read<FavoriteCubit>()
+                                          .toggleFavorite(item);
+                                    } else {
+                                      customSnackBar(
+                                          context: context,
+                                          text: "فشل في إضافة المنتج إلى السلة",
+                                          backgroundColor: Colors.red);
+                                    }
+                                  },
+                                ),
                               ),
-                            ),
-                            onTap: () {
-                              NavigationHelper.push(
-                                  context: context,
-                                  destination: ProductDetailsScreen(
-                                      productModel: item));
-                            },
-                            title: item.name,
-                            price: double.parse(item.price).toString(),
-                            image: item.images.first,
-                            rate: "4.5",
-                            onPressed: (_) {
-                              context
-                                  .read<FavoriteCubit>()
-                                  .toggleFavorite(item);
-                            },
-                          );
-                        },
-                      ),
-                    ),
-                    if (filtered.isNotEmpty)
-                      CustomButton(
-                          text: "اضافه الى السله",
-                          onTap: () async {
-                            final favCubit = context.read<FavoriteCubit>();
-
-                            // Use the cubit's method to add all favorites to cart
-                            final success = await favCubit.addAllFavoritesToCart();
-
-                            if (success) {
-                              customSnackBar(
-                                context: context,
-                                text: "تمت إضافة جميع العناصر إلى السلة",
-                                backgroundColor: Colors.green,
-                              );
-                              // Clear favorites after successful addition
-                              await favCubit.clearFavorites();
-                            } else {
-                              customSnackBar(
-                                context: context,
-                                text: "فشل في إضافة العناصر إلى السلة",
-                                backgroundColor: Colors.red,
-                              );
-                            }
+                              onTap: () {
+                                NavigationHelper.push(
+                                    context: context,
+                                    destination: ProductDetailsScreen(
+                                        productModel: item));
+                              },
+                              title: item.name,
+                              price: double.parse(item.price).toString(),
+                              image: item.images.first,
+                              rate: "4.5",
+                              onPressed: (_) {
+                                context
+                                    .read<FavoriteCubit>()
+                                    .toggleFavorite(item);
+                              },
+                            );
                           },
-                          style: TextStyles.white16)
-                  ],
-                );
-              } else {
-                return const SizedBox();
-              }
-            }),
+                        ),
+                ),
+                SizedBox(height: 14.h),
+                if (filtered.isNotEmpty)
+                  CustomButton(
+                      text: "اضافه الى السله",
+                      onTap: () async {
+                        final favCubit = context.read<FavoriteCubit>();
+                        final success = await favCubit.addAllFavoritesToCart();
+                        if (success) {
+                          customSnackBar(
+                            context: context,
+                            text: "تمت إضافة جميع العناصر إلى السلة",
+                            backgroundColor: Colors.green,
+                          );
+                          // Clear favorites after successful addition
+                          await favCubit.clearFavorites();
+                        } else {
+                          customSnackBar(
+                            context: context,
+                            text: "فشل في إضافة العناصر إلى السلة",
+                            backgroundColor: Colors.red,
+                          );
+                        }
+                      },
+                      style: TextStyles.white16)
+              ],
+            );
+          } else {
+            return const SizedBox();
+          }
+        }),
       ),
     );
   }

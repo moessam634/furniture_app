@@ -212,12 +212,12 @@ import '../../features/home/model/home_model/product_model.dart';
 class MockData {
   static List<CategoryModel> getCategories() {
     return [
-      CategoryModel(id: 0, name: 'الكل'), // All in Arabic
-      CategoryModel(id: 1, name: 'كراسي'), // Chairs
-      CategoryModel(id: 2, name: 'طاولات'), // Tables
-      CategoryModel(id: 3, name: 'أرائك'), // Sofas
-      CategoryModel(id: 4, name: 'غرف نوم'), // Bedrooms
-      CategoryModel(id: 5, name: 'غرف أطفال'), // Children bedrooms
+      CategoryModel(id: 0, name: 'الكل'),
+      CategoryModel(id: 1, name: 'كراسي'),
+      CategoryModel(id: 2, name: 'طاولات'),
+      CategoryModel(id: 3, name: 'أرائك'),
+      CategoryModel(id: 4, name: 'غرف نوم'),
+      CategoryModel(id: 5, name: 'غرف أطفال')
     ];
   }
 
@@ -270,22 +270,24 @@ class MockData {
         categoryId: 2,
         description: 'طاولة قهوة بتصميم عصري مع أدراج تخزين',
         images: [
-          'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=400',
-          'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=400',
+          'https://www.ikea.com/eg/en/images/products/sonhult-nest-of-tables-set-of-2-grey-walnut-effect__1344320_pe949825_s5.jpg?f=xl',
+          'https://www.ikea.com/eg/en/images/products/sonhult-nest-of-tables-set-of-2-grey-walnut-effect__1344321_pe949824_s5.jpg?f=xl',
         ],
       ),
 
       // Sofas
       ProductModel(
         id: 5,
-        name: 'أريكة ثلاثية مريحة',
+        name: 'أريكة السرير',
         price: '1299.99',
         quantity: 3,
         categoryId: 3,
-        description: 'أريكة ثلاثية فاخرة مع وسائد مريحة',
+        description:"صُممت أريكة السرير لاستغلال أقل مساحة ممكنة، مع زيادة مساحة النوم إلى أقصى حد. مثالية إذا كنت تعيش في مساحة صغيرة وترغب في تحويل أريكتك بسهولة إلى سرير.",
         images: [
-          'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=400',
-          'https://images.unsplash.com/photo-1549497538-303791108f95?w=400',
+          'https://www.ikea.com/eg/en/images/products/fridhult-sofa-bed-knisa-light-grey__1194665_pe902051_s5.jpg?f=xl',
+          'https://www.ikea.com/eg/en/images/products/fridhult-sofa-bed-knisa-light-grey__1194667_pe902050_s5.jpg?f=xl',
+          "https://www.ikea.com/eg/en/images/products/fridhult-sofa-bed-knisa-light-grey__1194664_pe902052_s5.jpg?f=xl",
+          "https://www.ikea.com/eg/en/images/products/fridhult-sofa-bed-knisa-light-grey__1247392_pe922659_s5.jpg?f=xl",
         ],
       ),
       ProductModel(
@@ -296,21 +298,21 @@ class MockData {
         categoryId: 3,
         description: 'كنبة زاوية بتصميم حديث ومساحة واسعة',
         images: [
-          'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=400',
-          'https://images.unsplash.com/photo-1549497538-303791108f95?w=400',
+          "https://www.ikea.com/eg/en/images/products/friheten-corner-sofa-bed-with-storage-faringe-brown-orange__1360635_pe954538_s5.jpg?f=xl",
+          "https://www.ikea.com/eg/en/images/products/friheten-corner-sofa-bed-with-storage-faringe-brown-orange__1360634_pe954537_s5.jpg?f=xl",
         ],
       ),
 
       // Bedrooms
       ProductModel(
         id: 7,
-        name: 'سرير مزدوج فاخر',
+        name: 'سرير كبير فاخر',
         price: '1599.99',
         quantity: 6,
         categoryId: 4,
-        description: 'سرير مزدوج مع رأس سرير مبطن',
+        description: 'بعد ليلة نوم هانئة، يمكنك بسهولة تحويل غرفة نومك أو غرفة ضيوفك إلى غرفة معيشة. مساحة التخزين المدمجة سهلة الوصول، وهي واسعة بما يكفي لتخزين أغطية السرير والكتب والبيجامات.',
         images: [
-          'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=400',
+          'https://images.unsplash.com/photo-1566665797739-1674de7a421a?ixlib=rb-4.0.3&auto=format&fit=crop&w=1374&q=80',
           'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=400',
         ],
       ),
@@ -336,8 +338,8 @@ class MockData {
         categoryId: 5,
         description: 'سرير أطفال بألوان زاهية وتصميم آمن',
         images: [
-          'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=400',
-          'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=400',
+          'https://www.ikea.com/eg/en/images/products/slaekt-headboard-with-cover-vissle-beige__1405810_pe970603_s5.jpg?f=xl',
+          'https://www.ikea.com/eg/en/images/products/slaekt-headboard-with-cover-vissle-beige__1405813_pe970604_s5.jpg?f=xl',
         ],
       ),
       ProductModel(
@@ -346,10 +348,10 @@ class MockData {
         price: '399.99',
         quantity: 7,
         categoryId: 5,
-        description: 'مكتب دراسة مع كرسي مناسب للأطفال',
+        description: 'التفاصيل هي ما يجعل هذا السرير المرتفع فريدًا. أشكال ناعمة، وسلّم متين، وحواجز قماشية بلمسات صفراء. كما يمكنكِ تزيينه ببياضات أسرّة وإكسسوارات من سلسلة',
         images: [
-          'https://images.unsplash.com/photo-1549497538-303791108f95?w=400',
-          'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=400',
+          'https://www.ikea.com/eg/en/images/products/vitval-loft-bed-frame-white-light-grey__0688127_pe722325_s5.jpg?f=xl',
+          'https://www.ikea.com/eg/en/images/products/vitval-loft-bed-frame-white-light-grey__0947222_ph168767_s5.jpg?f=xl',
         ],
       ),
     ];

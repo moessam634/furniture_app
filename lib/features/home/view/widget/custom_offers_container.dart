@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:furniture_app/core/styles/colors_app.dart';
+import 'package:furniture_app/core/styles/text_styles.dart';
+import 'package:furniture_app/core/widgets/custom_button.dart';
 
 class CustomOffersContainer extends StatelessWidget {
   const CustomOffersContainer(
@@ -28,24 +30,36 @@ class CustomOffersContainer extends StatelessWidget {
                 borderRadius: BorderRadius.circular(30.r),
               ),
             ),
-            child: Row(
+            child: Stack(
+              alignment: Alignment.center,
               children: [
+                Row(
+                  children: [
+                    SizedBox(width: 50.w),
+                    Image.asset(
+                      discountImage,
+                      width: containerWidth * .217,
+                      fit: BoxFit.contain,
+                    ),
+                    SizedBox(width: 8.w),
+                    Image.asset(
+                      productImage,
+                      height: containerHeight * .733,
+                      fit: BoxFit.contain,
+                    ),
+                  ],
+                ),
                 SizedBox(
-                  width: 50.w,
-                ),
-                Image.asset(
-                  discountImage,
-                  width: containerWidth * .217,
-                  fit: BoxFit.contain,
-                ),
-                SizedBox(
-                  width: 8.w,
-                ),
-                Image.asset(
-                  productImage,
-                  height: containerHeight * .733,
-                  fit: BoxFit.contain,
-                ),
+                  height: 55.h,
+                  child: CustomButton(
+                    text: "shop now",
+                    color: Colors.transparent,
+                    onTap: onTap,
+                    width: 70.w,
+                    height: 20.h,
+                    style: TextStyles.kPrimaryColor16.copyWith(fontSize: 14.sp),
+                  ),
+                )
               ],
             ),
           ),

@@ -9,6 +9,7 @@ class EditProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: true,
       appBar: AppBar(
           title: Text("My Profile", style: TextStyles.black24),
           toolbarHeight: 80.h,

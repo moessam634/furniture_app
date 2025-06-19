@@ -27,14 +27,14 @@ class AllProductsScreen extends StatelessWidget {
                 Navigator.pop(context);
               },
             ),
-            actions: [
-              IconButton(
-                  onPressed: () {
-                    NavigationHelper.push(
-                        context: context, destination: SearchScreen());
-                  },
-                  icon: Icon(Icons.search)),
-            ],
+            // actions: [
+            //   IconButton(
+            //       onPressed: () {
+            //         NavigationHelper.push(
+            //             context: context, destination: SearchScreen());
+            //       },
+            //       icon: Icon(Icons.search)),
+            // ],
             height: 60.h, style: TextStyles.black16),
         body: BlocProvider(
           create: (context) => sl<ProductsCubit>()..getProducts(),

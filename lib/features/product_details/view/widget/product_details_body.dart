@@ -46,16 +46,16 @@ class _ProductDetailsBodyState extends State<ProductDetailsBody> {
       });
     }
   }
+
   @override
   void initState() {
     super.initState();
-    selectedImage = (widget.productModel.images != null &&
-            widget.productModel.images!.isNotEmpty)
-        ? widget.productModel.images!.first
+    selectedImage = (widget.productModel.images.isNotEmpty)
+        ? widget.productModel.images.first
         : "https://via.placeholder.com/150";
     isFavorite =
-        context.read<FavoriteCubit>().isFavorite(widget.productModel.id!);
-    pricePerItem = double.tryParse(widget.productModel.price ?? '0') ?? 0;
+        context.read<FavoriteCubit>().isFavorite(widget.productModel.id);
+    pricePerItem = double.tryParse(widget.productModel.price) ?? 0;
     quantity = 1;
     totalPrice = pricePerItem * quantity;
   }
@@ -74,16 +74,24 @@ class _ProductDetailsBodyState extends State<ProductDetailsBody> {
               child: Stack(
                 alignment: Alignment.bottomCenter,
                 children: [
-                  CustomCircleContainer(image: selectedImage),
-                  SizedBox(height: 4.h),
-                  Positioned(
-                    bottom: 34.h,
-                    child: Text(
-                      "360°",
-                      style: TextStyles.kPrimaryColor10.copyWith(
-                          letterSpacing: .7, fontWeight: FontWeight.w500),
+                  // CustomCircleContainer(image: selectedImage),
+                  SizedBox(
+                    height: .47.sh,
+                    width: double.infinity,
+                    child: Image.network(
+                      selectedImage,
+                      fit: BoxFit.cover,
                     ),
-                  ),
+                  )
+                  // SizedBox(height: 4.h),
+                  // Positioned(
+                  //   bottom: 34.h,
+                  //   child: Text(
+                  //     "360°",
+                  //     style: TextStyles.kPrimaryColor10.copyWith(
+                  //         letterSpacing: .7, fontWeight: FontWeight.w500),
+                  //   ),
+                  // ),
                 ],
               ),
             ),
@@ -98,13 +106,14 @@ class _ProductDetailsBodyState extends State<ProductDetailsBody> {
                   children: <Widget>[
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      textDirection: TextDirection.rtl,
                       children: [
                         Flexible(
-                          child: Text(widget.productModel.name ?? "",
+                          child: Text(widget.productModel.name,
                               style: TextStyles.black24),
                         ),
-                        Text(
-                            "\$ ${totalPrice.toStringAsFixed(1)}",
+                        Text("${totalPrice.toStringAsFixed(1)} ر.س ",
+                            // textDirection: TextDirection.rtl,
                             style: TextStyles.black24),
                       ],
                     ),
@@ -114,7 +123,7 @@ class _ProductDetailsBodyState extends State<ProductDetailsBody> {
                             .copyWith(color: ColorsApp.kDarkTextColor)),
                     SizedBox(height: 5.h),
                     Text(
-                      widget.productModel.description ?? "",
+                      widget.productModel.description,
                       maxLines: 3,
                       overflow: TextOverflow.ellipsis,
                       style: TextStyles.black14.copyWith(
@@ -125,7 +134,7 @@ class _ProductDetailsBodyState extends State<ProductDetailsBody> {
                     Row(
                       mainAxisSize: MainAxisSize.min,
                       children: List.generate(
-                        widget.productModel.images?.length ?? 0,
+                        widget.productModel.images.length ?? 0,
                         (index) => Padding(
                           padding: EdgeInsets.only(right: 10.w),
                           child: InkWell(
@@ -143,8 +152,7 @@ class _ProductDetailsBodyState extends State<ProductDetailsBody> {
                                     borderRadius: BorderRadius.circular(8.r)),
                               ),
                               child: CustomNetworkImage(
-                                  image:
-                                      widget.productModel.images[index] ),
+                                  image: widget.productModel.images[index]),
                             ),
                           ),
                         ),
@@ -184,7 +192,7 @@ class _ProductDetailsBodyState extends State<ProductDetailsBody> {
           builder: (context, state) {
             final isFavorite = context
                 .read<FavoriteCubit>()
-                .isFavorite(widget.productModel.id!);
+                .isFavorite(widget.productModel.id);
             return ProductDetailsAppBar(
               icon: isFavorite ? ImageApp.filledHeart : ImageApp.heartIcon,
               onPressed: () {

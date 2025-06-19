@@ -72,12 +72,13 @@ class CustomProductCard extends StatelessWidget {
                 ),
               ),
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   Expanded(
                     child: Text(
                       title,
                       style: TextStyles.black16,
+                      textDirection: TextDirection.rtl,
                       overflow: TextOverflow.ellipsis,
                     ),
                   ),
@@ -88,7 +89,7 @@ class CustomProductCard extends StatelessWidget {
                       children: [
                         Flexible(
                           child: Text(
-                            price,
+                            "رس${double.parse(price).toStringAsFixed(1)}",
                             style: TextStyles.kPrimaryColor16,
                             overflow: TextOverflow.ellipsis,
                             maxLines: 1,
