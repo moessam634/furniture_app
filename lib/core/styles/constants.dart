@@ -232,8 +232,9 @@ class MockData {
         categoryId: 1,
         description: 'كرسي خشبي أنيق مصنوع من خشب البلوط الطبيعي',
         images: [
-          'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=400',
-          'https://images.unsplash.com/photo-1581539250439-c96689b516dd?w=400',
+          'https://www.blendfurniture.com/wp-content/uploads/2012/03/DC-031.jpg',
+          'https://www.blendfurniture.com/wp-content/uploads/2012/03/DC-083.jpg',
+          "https://www.blendfurniture.com/wp-content/uploads/2012/03/DC-166-RL.jpg"
         ],
       ),
       ProductModel(
@@ -258,8 +259,8 @@ class MockData {
         categoryId: 2,
         description: 'طاولة طعام فاخرة تتسع لـ 6 أشخاص',
         images: [
-          'https://images.unsplash.com/photo-1549497538-303791108f95?w=400',
-          'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=400',
+          'https://www.blendfurniture.com/wp-content/uploads/2018/12/Falanka-Rec-2.jpg',
+          'https://www.blendfurniture.com/wp-content/uploads/2018/12/Falanka-Rec-1.jpg',
         ],
       ),
       ProductModel(
@@ -270,24 +271,23 @@ class MockData {
         categoryId: 2,
         description: 'طاولة قهوة بتصميم عصري مع أدراج تخزين',
         images: [
-          'https://www.ikea.com/eg/en/images/products/sonhult-nest-of-tables-set-of-2-grey-walnut-effect__1344320_pe949825_s5.jpg?f=xl',
-          'https://www.ikea.com/eg/en/images/products/sonhult-nest-of-tables-set-of-2-grey-walnut-effect__1344321_pe949824_s5.jpg?f=xl',
+          'https://www.blendfurniture.com/wp-content/uploads/2020/04/Image-billy-wood-slide-2.jpeg',
+          'https://www.blendfurniture.com/wp-content/uploads/2020/04/Image-billy-wood-slide-1.jpeg',
+          "https://www.blendfurniture.com/wp-content/uploads/2020/04/75F6118D-A12E-47AE-BE58-6B0910CF5F5D.jpg"
         ],
       ),
 
       // Sofas
       ProductModel(
         id: 5,
-        name: 'أريكة السرير',
+        name: 'أريكة ',
         price: '1299.99',
         quantity: 3,
         categoryId: 3,
-        description:"صُممت أريكة السرير لاستغلال أقل مساحة ممكنة، مع زيادة مساحة النوم إلى أقصى حد. مثالية إذا كنت تعيش في مساحة صغيرة وترغب في تحويل أريكتك بسهولة إلى سرير.",
+        description:"تروي أريكة نيوبي ومسندها العثماني قصصًا من الأناقة الراقية والكلاسيكية المُعاد إحياءها: إذ تتميز هذه الأريكة بتناغم رائع بين لوح الرأس المُبطن الأنيق وخطوط المقعد الأنيقة. كما يُمكنك استكمالها بوسائد ولفائف للذراعين: دعائم مريحة تُضفي عليها مزيدًا من الراحة في لحظات الاسترخاء اليومية. ومن بين مزايا نيوبي، الراحة المُتميزة: ففي الإصدارات المتحركة، يُمكن تحريك المقاعد يدويًا، أو في الإصدارات الكهربائية، بالضغط على زر داخلي بإضاءة خلفية، لتستمتع بمقعد أكثر راحة واسترخاء.",
         images: [
-          'https://www.ikea.com/eg/en/images/products/fridhult-sofa-bed-knisa-light-grey__1194665_pe902051_s5.jpg?f=xl',
-          'https://www.ikea.com/eg/en/images/products/fridhult-sofa-bed-knisa-light-grey__1194667_pe902050_s5.jpg?f=xl',
-          "https://www.ikea.com/eg/en/images/products/fridhult-sofa-bed-knisa-light-grey__1194664_pe902052_s5.jpg?f=xl",
-          "https://www.ikea.com/eg/en/images/products/fridhult-sofa-bed-knisa-light-grey__1247392_pe922659_s5.jpg?f=xl",
+          'https://www.blendfurniture.com/wp-content/uploads/2016/06/undone-2.jpg',
+          'https://www.blendfurniture.com/wp-content/uploads/2016/06/Niobe-4-1.jpg',
         ],
       ),
       ProductModel(
@@ -298,8 +298,8 @@ class MockData {
         categoryId: 3,
         description: 'كنبة زاوية بتصميم حديث ومساحة واسعة',
         images: [
-          "https://www.ikea.com/eg/en/images/products/friheten-corner-sofa-bed-with-storage-faringe-brown-orange__1360635_pe954538_s5.jpg?f=xl",
-          "https://www.ikea.com/eg/en/images/products/friheten-corner-sofa-bed-with-storage-faringe-brown-orange__1360634_pe954537_s5.jpg?f=xl",
+          "https://www.blendfurniture.com/wp-content/uploads/2020/06/coco-9.jpg",
+          "https://www.blendfurniture.com/wp-content/uploads/2020/06/1-4.jpg",
         ],
       ),
 
@@ -338,8 +338,8 @@ class MockData {
         categoryId: 5,
         description: 'سرير أطفال بألوان زاهية وتصميم آمن',
         images: [
-          'https://www.ikea.com/eg/en/images/products/slaekt-headboard-with-cover-vissle-beige__1405810_pe970603_s5.jpg?f=xl',
-          'https://www.ikea.com/eg/en/images/products/slaekt-headboard-with-cover-vissle-beige__1405813_pe970604_s5.jpg?f=xl',
+          'https://www.damsonfurniture.com/cdn/shop/files/424da7e10fcd251fca92c582dbdc39c3_44b228d9-827d-408a-9f8f-8343a2815710.jpg?v=1740758216&width=1200',
+          'https://www.damsonfurniture.com/cdn/shop/files/424da7e10fcd251fca92c582dbdc39c3_44b228d9-827d-408a-9f8f-8343a2815710.jpg?v=1740758216&width=1200',
         ],
       ),
       ProductModel(
@@ -350,8 +350,9 @@ class MockData {
         categoryId: 5,
         description: 'التفاصيل هي ما يجعل هذا السرير المرتفع فريدًا. أشكال ناعمة، وسلّم متين، وحواجز قماشية بلمسات صفراء. كما يمكنكِ تزيينه ببياضات أسرّة وإكسسوارات من سلسلة',
         images: [
-          'https://www.ikea.com/eg/en/images/products/vitval-loft-bed-frame-white-light-grey__0688127_pe722325_s5.jpg?f=xl',
-          'https://www.ikea.com/eg/en/images/products/vitval-loft-bed-frame-white-light-grey__0947222_ph168767_s5.jpg?f=xl',
+          'https://chichomz.com/cdn/shop/files/cc_1.png?v=1744804235&width=990',
+          "https://chichomz.com/cdn/shop/files/cc_1.webp?v=1703161013&width=990",
+          "https://chichomz.com/cdn/shop/files/cc_2.jpg?v=1703161013&width=990"
         ],
       ),
     ];

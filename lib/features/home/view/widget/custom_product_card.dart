@@ -28,81 +28,91 @@ class CustomProductCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: 127.w,
-      height: 204.h,
-      child: InkWell(
-        onTap: onTap,
-        child: Column(
-          children: [
-            Stack(
-              children: [
-                ClipRRect(
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(8.r),
-                    topRight: Radius.circular(8.r),
-                  ),
-                  child: SizedBox(
-                      width: double.infinity,
-                      height: 124.h,
-                      child: CustomNetworkImage(image: image)),
-                ),
-                Positioned(
-                  top: 10.h,
-                  right: 10.w,
-                  child: CustomFavoriteIcon(
-                    icon:
-                        isFavorite ? ImageApp.filledHeart : ImageApp.heartIcon,
-                    onPressed: onIconPressed,
-                    width: 33.w,
-                    height: 35.h,
-                  ),
-                ),
-              ],
-            ),
-            Container(
-              width: double.infinity,
-              padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 8.h),
-              height: 80.h,
-              decoration: BoxDecoration(
-                color: ColorsApp.kSecondaryColor,
-                borderRadius: BorderRadius.only(
-                  bottomRight: Radius.circular(8.r),
-                  bottomLeft: Radius.circular(8.r),
-                ),
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.end,
+    return Container(
+      decoration: BoxDecoration(boxShadow: [
+        BoxShadow(
+          color: ColorsApp.kPrimaryColor.withOpacity(0.3),
+          blurRadius: 10.r,
+          spreadRadius: 0,
+          offset: const Offset(0, 2),
+        ),
+      ]),
+      child: SizedBox(
+        width: 127.w,
+        height: 204.h,
+        child: InkWell(
+          onTap: onTap,
+          child: Column(
+            children: [
+              Stack(
                 children: [
-                  Expanded(
-                    child: Text(
-                      title,
-                      style: TextStyles.black16,
-                      textDirection: TextDirection.rtl,
-                      overflow: TextOverflow.ellipsis,
+                  ClipRRect(
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(8.r),
+                      topRight: Radius.circular(8.r),
                     ),
+                    child: SizedBox(
+                        width: double.infinity,
+                        height: 124.h,
+                        child: CustomNetworkImage(image: image)),
                   ),
-                  SizedBox(height: 10.h),
-                  Expanded(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Flexible(
-                          child: Text(
-                            "رس${double.parse(price).toStringAsFixed(1)}",
-                            style: TextStyles.kPrimaryColor16,
-                            overflow: TextOverflow.ellipsis,
-                            maxLines: 1,
-                          ),
-                        ),
-                        CustomPlusIcon(onTap: onPressed),
-                      ],
+                  Positioned(
+                    top: 10.h,
+                    right: 10.w,
+                    child: CustomFavoriteIcon(
+                      icon:
+                          isFavorite ? ImageApp.filledHeart : ImageApp.heartIcon,
+                      onPressed: onIconPressed,
+                      width: 33.w,
+                      height: 35.h,
                     ),
                   ),
                 ],
               ),
-            )
-          ],
+              Container(
+                width: double.infinity,
+                padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 8.h),
+                height: 80.h,
+                decoration: BoxDecoration(
+                  color: ColorsApp.kSecondaryColor,
+                  borderRadius: BorderRadius.only(
+                    bottomRight: Radius.circular(8.r),
+                    bottomLeft: Radius.circular(8.r),
+                  ),
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    Expanded(
+                      child: Text(
+                        title,
+                        style: TextStyles.black16,
+                        textDirection: TextDirection.rtl,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
+                    SizedBox(height: 10.h),
+                    Expanded(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Flexible(
+                            child: Text(
+                              "رس${double.parse(price).toStringAsFixed(1)}",
+                              style: TextStyles.kPrimaryColor16,
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 1,
+                            ),
+                          ),
+                          CustomPlusIcon(onTap: onPressed),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );

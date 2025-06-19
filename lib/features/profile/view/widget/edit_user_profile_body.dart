@@ -76,10 +76,9 @@ class _EditUserProfileBodyState extends State<EditUserProfileBody> {
                 CircleAvatar(
                   radius: 80.r,
                   backgroundColor: Colors.white,
-                  child: Image.asset(
-                    ImageApp.chair,
-                    fit: BoxFit.cover,
-                  ),
+                  backgroundImage: _savedImage != null
+                      ? FileImage(_savedImage!)
+                      : AssetImage(ImageApp.profileImage) as ImageProvider,
                 ),
                 CircleAvatar(
                     radius: 26.r,
